@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   const checkSchema = postSchema.safeParse(body);
 
   if (!checkSchema.success) {
-    return NextResponse.json({ error: "Invalid input" }, { status: 300 });
+    return NextResponse.json({ message: "Bad request" }, { status: 400 });
   }
   const data = checkSchema.data;
 
@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
   const check = getSchema.safeParse(res);
 
   if (!check.success) {
-    return NextResponse.json({ error: "Invalid input" }, { status: 300 });
+    return NextResponse.json({ message: "Bad request" }, { status: 400 });
   }
   const body = check.data;
 

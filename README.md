@@ -1,1 +1,1 @@
-# Twitter Clone
+# Real time chat app
