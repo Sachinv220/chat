@@ -19,8 +19,8 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-  refresh_token     String? 
-  access_token      String? 
+  refresh_token     String?
+  access_token      String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
@@ -46,6 +46,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   chats         Chat[]
+  messages      Message[] @relation("sentBy")
 }
 
 model Chat {
@@ -60,7 +61,10 @@ model Message {
   id      String @id @default(cuid())
   message String
   chat    Chat   @relation("Chat", fields: [chatId], references: [id], onDelete: Cascade)
+  user    User   @relation("sentBy", fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
   chatId  String
 
   @@index([chatId])
+  @@index([userId])
 }
