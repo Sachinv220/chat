@@ -19,8 +19,8 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-  refresh_token     String? @db.Char(1)
-  access_token      String? @db.Char(1)
+  refresh_token     String? 
+  access_token      String? 
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
