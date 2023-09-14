@@ -19,8 +19,14 @@ interface Props {
   image?: string;
 }
 
+const getInitials = (name?: string) => {
+  if (!name) return "";
+  let ini = name.split(" ");
+  if (ini.length === 1) return ini[0][0]
+  return ini[0][0] + ini[1][0];
+};
+
 const UserNav: FC<Props> = ({ name, email, image }) => {
-  const parts = name?.split(" ") as string[];
   const { setTheme, theme } = useTheme();
   const toggleTheme = () => {
     if (theme === "dark") {
@@ -35,13 +41,10 @@ const UserNav: FC<Props> = ({ name, email, image }) => {
       <DropdownMenuTrigger>
         <Avatar>
           <AvatarImage className="mb-4" src={image} />
-          <AvatarFallback>
-            {parts ? parts[0][0] + parts[1][0] : ""}
-          </AvatarFallback>
+          <AvatarFallback>{getInitials(name)}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="cursor-pointer">
-
+      <DropdownMenuContent className="child:cursor-pointer">
         <DropdownMenuItem className="flex flex-col">
           <h1 className="font-bold mr-auto">{name}</h1>
           <h2 className="opacity-60">{email}</h2>
