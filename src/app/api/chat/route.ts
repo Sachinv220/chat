@@ -32,18 +32,23 @@ export async function POST(req: NextRequest) {
       },
     },
   });
+  
+  return NextResponse.json({ message: "Success" }, { status: 200 });
 }
 
 export async function GET(req: NextRequest) {
-  const res = await req.json();
-  const check = getSchema.safeParse(res);
+  const url = new URL(req.url);
+  const data = new URLSearchParams(url.search);
+  const domain = data.get("domain");
+  const user = data.get("email");
 
-  if (!check.success) {
-    return NextResponse.json({ message: "Bad request" }, { status: 400 });
+  if (!user || !domain) {
+    return NextResponse.json({ message: "Invalid Request" }, { status: 300 });
   }
-  const body = check.data;
 
-  const data = await prisma.chat.findMany({
+  const email = user + "@" + domain;
+
+  const res = await prisma.chat.findMany({
     select: {
       id: true,
       name: true,
@@ -57,12 +62,12 @@ export async function GET(req: NextRequest) {
     },
     where: {
       participants: {
-        every: {
-          id: body.email,
+        some: {
+          email,
         },
       },
     },
   });
 
-  return NextResponse.json(data);
+  return NextResponse.json(res);
 }
