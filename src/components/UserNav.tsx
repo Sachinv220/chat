@@ -7,11 +7,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { FC } from "react";
 import { ExitIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
+import Image from "next/image";
 
 interface Props {
   email?: string;
@@ -22,7 +23,7 @@ interface Props {
 const getInitials = (name?: string) => {
   if (!name) return "";
   let ini = name.split(" ");
-  if (ini.length === 1) return ini[0][0]
+  if (ini.length === 1) return ini[0][0];
   return ini[0][0] + ini[1][0];
 };
 
@@ -40,8 +41,16 @@ const UserNav: FC<Props> = ({ name, email, image }) => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage className="mb-4" src={image} />
-          <AvatarFallback>{getInitials(name)}</AvatarFallback>
+          {image ? (
+            <Image
+              alt="Profile"
+              src={image}
+              height={50}
+              width={50}
+            />
+          ) : (
+            <AvatarFallback>{getInitials(name)}</AvatarFallback>
+          )}
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="child:cursor-pointer">

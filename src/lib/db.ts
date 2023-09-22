@@ -9,7 +9,6 @@ export let prisma: PrismaClient;
 if (process.env.NODE_ENV === "production") {
   prisma = new PrismaClient();
 } else {
-  console.log("in development");
   if (!global.cachedPrisma) {
     global.cachedPrisma = new PrismaClient();
   }
