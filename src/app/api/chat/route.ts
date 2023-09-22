@@ -4,10 +4,6 @@ import { prisma } from "@/lib/db";
 import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 
-const getSchema = z.object({
-  email: z.string(),
-});
-
 const postSchema = z.object({
   name: z.string(),
   users: z.array(z.string()),
@@ -22,31 +18,30 @@ export async function POST(req: NextRequest) {
   }
   const data = checkSchema.data;
 
-  console.log(data);
-
-  const res = await prisma.chat.create({
-    data: {
-      name: data.name,
-      participants: {
-        connect: data.users.map((email) => ({ email })),
+  try {
+    const res = await prisma.chat.create({
+      data: {
+        name: data.name,
+        participants: {
+          connect: data.users.map((email) => ({ email })),
+        },
       },
-    },
-  });
-  
+    });
+  } catch (e) {
+    return NextResponse.json({ message: "Request Failed" }, { status: 300 });
+  }
+
   return NextResponse.json({ message: "Success" }, { status: 200 });
 }
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const data = new URLSearchParams(url.search);
-  const domain = data.get("domain");
-  const user = data.get("email");
+  const email = data.get("email");
 
-  if (!user || !domain) {
+  if (!email) {
     return NextResponse.json({ message: "Invalid Request" }, { status: 300 });
   }
-
-  const email = user + "@" + domain;
 
   const res = await prisma.chat.findMany({
     select: {
@@ -56,6 +51,7 @@ export async function GET(req: NextRequest) {
         select: {
           name: true,
           email: true,
+          image: true,
           id: true,
         },
       },
