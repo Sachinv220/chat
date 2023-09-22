@@ -31,7 +31,7 @@ const Sidebar: React.FC<Props> = ({ chats, user }) => {
       </form>
       <div className="pt-3">
         {chats.map((chat) => (
-          <Chat chat={chat} />
+          <Chat key={chat.id} chat={chat} />
         ))}
       </div>
     </nav>
