@@ -1,6 +1,8 @@
 /** @format */
 
-type Chat = {
+import { type } from "os";
+
+export type Chat = {
   name: string;
   id: string;
   participants: {
@@ -9,4 +11,16 @@ type Chat = {
     image: string;
     email: string | null;
   }[];
+};
+
+export type Message = {
+  id: string;
+  message: string;
+  dateTime: Date;
+  user: {
+    image: string | null;
+    id: string;
+    name: string | null;
+    email: string | null;
+  };
 };

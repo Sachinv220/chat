@@ -19,8 +19,16 @@ export async function GET(req: NextRequest) {
 
   const res = await prisma.message.findMany({
     select: {
+      id: true,
       message: true,
-      user: true,
+      user: {
+        select: {
+          id: true,
+          image: true,
+          name: true,
+          email: true,
+        },
+      },
       dateTime: true,
     },
     where: {

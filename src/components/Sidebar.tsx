@@ -6,16 +6,25 @@ import Chat from "./Chat";
 import SearchChat from "./SearchChat";
 import UserNav from "./UserNav";
 import { Button } from "./ui/button";
-import { User } from "next-auth";
+import { getAuthSession } from "@/lib/nextauth";
+import { redirect } from "next/navigation";
 
-interface Props {
-  chats: Chat[];
-  user: Pick<User, "image" | "name" | "email">;
-}
+const getChats = async (email: string) => {
+  const data = await fetch(
+    `${process.env.NEXTAUTH_URL}/api/chat?email=${email}`,
+    { cache: "force-cache" }
+  );
+  const res = await data.json();
+  return res as Chat[];
+};
 
-const Sidebar: React.FC<Props> = ({ chats, user }) => {
+const Sidebar: React.FC<{}> = async () => {
+  const session = await getAuthSession();
+  if (!session) redirect("/signin");
+  const { user } = session;
+  const chats = await getChats(user.email || "");
   return (
-    <nav className="flex flex-col w-4/12 h-screen shadow-md border-r-2">
+    <nav className="flex flex-col w-4/12 h-screen shadow-md border-r">
       <div className="flex w-full items-center p-1">
         <UserNav
           image={user.image || undefined}
