@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export default function middleware(req: NextRequest) {
   if (req.url.includes("/")) {
-    return NextResponse.redirect(`http:localhost:3000/chat`);
+    return NextResponse.redirect(`https://chatcoffee.netlify.app/chat`);
   }
 }
 
