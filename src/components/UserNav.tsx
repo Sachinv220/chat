@@ -13,19 +13,13 @@ import { ExitIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import { getInitials } from "@/lib/utils";
 
 interface Props {
   email?: string;
   name?: string;
   image?: string;
 }
-
-const getInitials = (name?: string) => {
-  if (!name) return "";
-  let ini = name.split(" ");
-  if (ini.length === 1) return ini[0][0];
-  return ini[0][0] + ini[1][0];
-};
 
 const UserNav: FC<Props> = ({ name, email, image }) => {
   const { setTheme, theme } = useTheme();

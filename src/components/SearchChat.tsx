@@ -18,7 +18,7 @@ const SearchChat: FC<Props> = ({ chats }) => {
   const [showChats, setShowChats] = useState(false);
   return (
     <Command className="max-lg">
-      <div className="dark:bg-slate-900 bg-slate-200 ">
+      <div className="dark:bg-slate-900 bg-slate-100 ">
         <CommandInput
           onClick={(e) => setShowChats(true)}
           onKeyDown={(e) => (e.key === "Escape" ? setShowChats(false) : "")}

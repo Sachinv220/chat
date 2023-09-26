@@ -25,10 +25,10 @@ const ChatPanel: React.FC<Props> = ({ chatMessages, userId }) => {
         ))}
       </div>
       <form
-        className="flex gap-3 mt-auto bg-slate-900"
+        className="flex gap-3 mt-auto "
         onSubmit={() => console.log("Form Submitted")}
       >
-        <Input placeholder="Send a Message" />
+        <Input placeholder="Send a Message" className="bg-slate-100 dark:bg-slate-900" />
         <Button>
           <PaperPlaneIcon />
         </Button>

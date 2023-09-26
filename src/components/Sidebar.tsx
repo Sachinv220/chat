@@ -8,6 +8,7 @@ import UserNav from "./UserNav";
 import { Button } from "./ui/button";
 import { getAuthSession } from "@/lib/nextauth";
 import { redirect } from "next/navigation";
+import Album from "./Album";
 
 const getChats = async (email: string) => {
   const data = await fetch(
@@ -34,9 +35,6 @@ const Sidebar: React.FC<{}> = async () => {
       </div>
       <form className="flex w-full gap-1 shadow-sm">
         <SearchChat chats={chats.map((chat) => chat.name)} />
-        <Button className="bg-transparent m-0 mx-1 p-0 w-10 rounded-full my-1">
-          <PlusIcon color="white" />
-        </Button>
       </form>
       <div className="pt-3">
         {chats.map((chat) => (

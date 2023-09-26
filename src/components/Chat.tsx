@@ -2,18 +2,21 @@
 import Link from "next/link";
 import React from "react";
 import { Chat } from "@/lib/types";
+import Album from "./Album";
 
 interface Props {
   chat: Chat;
 }
 
 const Chat: React.FC<Props> = ({ chat }) => {
+  const { participants } = chat;
   return (
     <Link href={`${process.env.NEXTAUTH_URL}/chat/${chat.id}`}>
-      <div className="cursor-pointer bg-slate-200 dark:bg-slate-900 px-1 pt-2 h-16">
-        <h1 className="font-semibold text-xl">{chat.name}</h1>
+      <div className="flex cursor-pointer bg-slate-100 dark:bg-slate-900 h-16 px-1">
+        <Album images={participants.map((par) => par.image)} />
+        <h1 className="font-semibold text-md mt-1">{chat.name}</h1>
       </div>
-      <hr/>
+      <hr />
     </Link>
   );
 };
