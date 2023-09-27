@@ -1,7 +1,7 @@
 /** @format */
 import Link from "next/link";
 import React from "react";
-import { Chat } from "@/actions/post";
+import { Chat } from "@/actions/types";
 import Album from "./Album";
 
 interface Props {

@@ -1,7 +1,7 @@
 /** @format */
 import { prisma } from "@/lib/db";
 import { getAuthSession } from "@/lib/nextauth";
-import { Chat } from "@prisma/client";
+import { Chat } from "./types";
 import { Session } from "next-auth";
 
 export async function getMessages(chatId: string) {
