@@ -9,10 +9,12 @@ import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 interface Props {
   message: Message;
   align: boolean;
+  loading?: true;
 }
 
-const ChatBubble: React.FC<Props> = ({ message, align }) => {
-  const bg = align ? "bg-indigo-500" : "dark:bg-indigo-600 bg-slate-200";
+const ChatBubble: React.FC<Props> = ({ message, align, loading }) => {
+  let bg = !align ? "bg-indigo-500" : "dark:bg-blue-600 bg-blue-400";
+  if (loading) bg = " dark:bg-slate-800 bg-slate-200";
   const padding = align ? "ml-auto" : "";
   return (
     <div className={`flex w-fit mt-3 gap-1 ${padding}`}>
