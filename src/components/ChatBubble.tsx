@@ -1,7 +1,7 @@
 /** @format */
 "use client";
-import { Message } from "@/lib/types";
-import { cn, getInitials } from "@/lib/utils";
+import { Message } from "@/actions/types";
+import { getInitials } from "@/lib/utils";
 import React from "react";
 import { Avatar } from "./ui/avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
