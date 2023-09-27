@@ -1,8 +1,8 @@
 /** @format */
 
+import { getMessages } from "@/actions/messages";
 import ChatPanel from "@/components/ChatPanel";
-import { getAuthSession } from "@/lib/nextauth";
-import { Message } from "@/lib/types";
+import { redirect } from "next/navigation";
 import React from "react";
 
 interface Props {
@@ -11,23 +11,13 @@ interface Props {
   };
 }
 
-const getMessages = async (chatId: string) => {
-  const res = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/messages?chatId=${chatId}`,
-    { cache: "force-cache" }
-  );
-  const data = await res.json();
-
-  return data as Message[];
-};
-
 const Page: React.FC<Props> = async ({ params }) => {
-  const messages = await getMessages(params.chatId);
-  const session = await getAuthSession();
-  const { id } = session?.user!;
+  const res = await getMessages(params.chatId);
+  if (!res) redirect("/signin");
+  const { messages, user } = res;
   return (
     <div className="w-full">
-      <ChatPanel userId={id} chatMessages={messages} />
+      <ChatPanel userId={user.id} chatMessages={messages} />
     </div>
   );
 };

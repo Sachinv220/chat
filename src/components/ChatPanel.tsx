@@ -5,7 +5,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import ChatBubble from "./ChatBubble";
-import { Message } from "@/lib/types";
+import { Message } from "@/actions/messages";
 
 interface Props {
   chatMessages: Message[];
