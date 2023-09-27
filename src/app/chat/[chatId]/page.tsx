@@ -1,6 +1,6 @@
 /** @format */
 
-import { getMessages } from "@/actions/messages";
+import { getMessages } from "@/actions/get";
 import ChatPanel from "@/components/ChatPanel";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -17,7 +17,11 @@ const Page: React.FC<Props> = async ({ params }) => {
   const { messages, user } = res;
   return (
     <div className="w-full">
-      <ChatPanel userId={user.id} chatMessages={messages} />
+      <ChatPanel
+        chatId={params.chatId}
+        userId={user.id}
+        chatMessages={messages}
+      />
     </div>
   );
 };
