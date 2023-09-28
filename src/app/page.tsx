@@ -8,7 +8,7 @@ const montserrat = Montserrat({ subsets: ["latin"], weight: "800" });
 
 const Navbar = () => {
   const className =
-    "flex text-lg dark:text-white text-black text-opacity-50 hover:text-opacity-100";
+    "flex text-lg text-muted-foreground hover:text-black dark:hover:text-white";
   return (
     <div className="flex w-screen items-center justify-center h-12 gap-3">
       <Link href="/chat" className={className}>
@@ -32,7 +32,7 @@ const Page = () => {
           >
             A Chat Application built using Next.js 13, Prisma and next-auth.
           </h1>
-          <p className="text-black dark:text-white text-opacity-50">
+          <p className="text-muted-foreground">
             The Source code is available on{" "}
             <Link
               href="https://github.com/Sachinv220/chat"
