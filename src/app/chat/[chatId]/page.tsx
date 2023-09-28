@@ -1,8 +1,8 @@
 /** @format */
 
 import { getMessages } from "@/actions/get";
-import { Message } from "@/actions/types";
 import ChatPanel from "@/components/ChatPanel";
+import { Session } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -15,14 +15,10 @@ interface Props {
 const Page: React.FC<Props> = async ({ params }) => {
   const res = await getMessages(params.chatId);
   if (!res) redirect("/login");
-  const { messages, user } = res;
+  const messages = res;
   return (
     <div className="w-full">
-      <ChatPanel
-        chatId={params.chatId}
-        user={user as Message["user"]}
-        chatMessages={messages}
-      />
+      <ChatPanel chatId={params.chatId} chatMessages={messages} />
     </div>
   );
 };

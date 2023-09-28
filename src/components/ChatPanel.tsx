@@ -7,6 +7,7 @@ import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import ChatBubble from "./ChatBubble";
 import { Message } from "@/actions/types";
 import { createMessage } from "@/actions/post";
+import { useSession } from "next-auth/react";
 
 interface LoadingMessage extends Message {
   loading?: boolean;
@@ -14,21 +15,19 @@ interface LoadingMessage extends Message {
 
 interface Props {
   chatMessages: LoadingMessage[];
-  user: Message["user"];
   chatId: string;
 }
 
-const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
+const ChatPanel: React.FC<Props> = ({ chatId, chatMessages }) => {
+  const { data: session } = useSession();
+  const user = session?.user as Message["user"];
   const [messages, setMessages] = useState(chatMessages);
   const [text, setText] = useState("");
-  const [loadingText, setLoadingText] = useState("");
 
   async function handleSubmit() {
-    setLoadingText(text);
-    const message = await createMessage(text, chatId);
+    const message = await createMessage(text, chatId, user.id);
     if (!message) return;
     setMessages([...messages, message]);
-    setLoadingText("");
   }
 
   return (
@@ -41,18 +40,6 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
             message={message}
           />
         ))}
-        {loadingText.length > 0 && (
-          <ChatBubble
-            align={true}
-            message={{
-              user,
-              message: loadingText,
-              id: Math.random().toString(),
-              dateTime: new Date(),
-            }}
-            loading={true}
-          />
-        )}
       </div>
       <div className="flex gap-3 mt-auto ">
         <Input

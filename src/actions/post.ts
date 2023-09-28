@@ -1,13 +1,13 @@
 /** @format */
-"use server"
+"use server";
 import { prisma } from "@/lib/db";
-import { getAuthSession } from "@/lib/nextauth";
 import { Message } from "./types";
 
-export async function createMessage(message: string, chatId: string) {
-  const session = await getAuthSession();
-  if (!session) return false;
-  const { user } = session;
+export async function createMessage(
+  message: string,
+  chatId: string,
+  userId: string
+) {
   try {
     const createdMessage: Message = await prisma.message.create({
       data: {
@@ -16,7 +16,7 @@ export async function createMessage(message: string, chatId: string) {
           connect: { id: chatId },
         },
         user: {
-          connect: { id: user.id },
+          connect: { id: userId },
         },
       },
       include: {

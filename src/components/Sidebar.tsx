@@ -6,11 +6,16 @@ import SearchChat from "./SearchChat";
 import UserNav from "./UserNav";
 import { redirect } from "next/navigation";
 import { getChats } from "@/actions/get";
+import { Session } from "next-auth";
 
-const Sidebar = async () => {
-  const res = await getChats();
+interface Props {
+  user: Session["user"];
+}
+
+const Sidebar: React.FC<Props> = async ({ user }) => {
+  const res = await getChats(user);
   if (!res) redirect("/login");
-  const { user, chats } = res;
+  const chats = res;
   return (
     <nav className="flex flex-col w-4/12 h-screen shadow-md border-r">
       <div className="flex w-full items-center p-1">
