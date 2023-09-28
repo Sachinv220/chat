@@ -9,7 +9,7 @@ import { getChats } from "@/actions/get";
 
 const Sidebar = async () => {
   const res = await getChats();
-  if (!res) redirect("/signin");
+  if (!res) redirect("/login");
   const { user, chats } = res;
   return (
     <nav className="flex flex-col w-4/12 h-screen shadow-md border-r">

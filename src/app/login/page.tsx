@@ -8,7 +8,6 @@ const SignIn = async () => {
   return (
     <div className="grid place-items-center h-screen">
       <SignInButton/>
-      <h1>what happened</h1>
     </div>
   );
 };
