@@ -17,18 +17,17 @@ interface LoadingMessage extends Message {
 interface Props {
   chatMessages: LoadingMessage[];
   chatId: string;
+  user: Session["user"]
 }
 
-const ChatPanel: React.FC<Props> = ({ chatId, chatMessages }) => {
-  const { data: session } = useSession();
-  let user: Session["user"] = session?.user as Session["user"];
+const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
   const [messages, setMessages] = useState(chatMessages);
   const [text, setText] = useState("");
   const [tempMessage, setTempMessage] = useState("");
 
   async function handleSubmit() {
     setTempMessage(text);
-    const message = await createMessage(text, chatId, user?.id || "");
+    const message = await createMessage(text, chatId, user.id || "");
     if (!message) return;
     setMessages([...messages, message]);
     setTempMessage("");
