@@ -1,12 +1,8 @@
 /** @format */
+import { Session } from "next-auth";
 
 export type Message = {
-  user: {
-    id: string;
-    name: string | null;
-    email: string | null;
-    image: string | null;
-  };
+  user: Session["user"],
   message: string;
   id: string;
   dateTime: Date;

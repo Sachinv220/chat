@@ -1,12 +1,12 @@
 /** @format */
 import { prisma } from "@/lib/db";
-import { Chat } from "./types";
+import { Chat, Message } from "./types";
 import { Session } from "next-auth";
 
 export async function getMessages(chatId: string) {
   if (!chatId) return false;
 
-  const messages = await prisma.message.findMany({
+  const messages: Message[] = await prisma.message.findMany({
     select: {
       id: true,
       message: true,

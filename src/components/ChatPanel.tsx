@@ -8,6 +8,7 @@ import ChatBubble from "./ChatBubble";
 import { Message } from "@/actions/types";
 import { createMessage } from "@/actions/post";
 import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 
 interface LoadingMessage extends Message {
   loading?: boolean;
@@ -20,14 +21,17 @@ interface Props {
 
 const ChatPanel: React.FC<Props> = ({ chatId, chatMessages }) => {
   const { data: session } = useSession();
-  const user = session?.user as Message["user"];
+  let user: Session["user"] = session?.user as Session["user"];
   const [messages, setMessages] = useState(chatMessages);
   const [text, setText] = useState("");
+  const [tempMessage, setTempMessage] = useState("");
 
   async function handleSubmit() {
-    const message = await createMessage(text, chatId, user.id);
+    setTempMessage(text);
+    const message = await createMessage(text, chatId, user?.id || "");
     if (!message) return;
     setMessages([...messages, message]);
+    setTempMessage("");
   }
 
   return (
@@ -40,6 +44,19 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages }) => {
             message={message}
           />
         ))}
+        {tempMessage && (
+          <ChatBubble
+            align={true}
+            key={Math.random().toString()}
+            loading={true}
+            message={{
+              dateTime: new Date(),
+              id: Math.random().toString(),
+              message: tempMessage,
+              user: user,
+            }}
+          />
+        )}
       </div>
       <div className="flex gap-3 mt-auto ">
         <Input

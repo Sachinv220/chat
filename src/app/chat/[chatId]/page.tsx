@@ -2,7 +2,6 @@
 
 import { getMessages } from "@/actions/get";
 import ChatPanel from "@/components/ChatPanel";
-import { Session } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
 

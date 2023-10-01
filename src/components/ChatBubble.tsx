@@ -14,7 +14,7 @@ interface Props {
 }
 
 const ChatBubble: React.FC<Props> = ({ message, align, loading }) => {
-  let bg = !align ? "bg-indigo-500" : "dark:bg-blue-600 bg-blue-400";
+  let bg = !align ? "bg-slate-300 dark:bg-indigo-500" : "dark:bg-blue-600 bg-blue-500";
   if (loading) bg = " dark:bg-slate-800 bg-slate-200";
   const padding = align ? "ml-auto" : "";
   return (
