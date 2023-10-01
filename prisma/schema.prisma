@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider     = "cockroachdb"
+  provider     = "postgres"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
@@ -63,7 +63,7 @@ model Message {
   dateTime DateTime @default(now())
   chat     Chat     @relation("Chat", fields: [chatId], references: [id], onDelete: Cascade)
   user     User     @relation("sentBy", fields: [userId], references: [id], onDelete: Cascade)
-  userId   String
+  userId   String   
   chatId   String
 
   @@index([chatId])
