@@ -1,7 +1,9 @@
 /** @format */
+"use server";
 import { prisma } from "@/lib/db";
 import { Chat, Message } from "./types";
 import { Session } from "next-auth";
+
 
 export async function getMessages(chatId: string) {
   if (!chatId) return false;
@@ -25,7 +27,6 @@ export async function getMessages(chatId: string) {
         id: chatId,
       },
     },
-    take: 10,
   });
   return messages;
 }
@@ -51,7 +52,6 @@ export async function getChats(user: Session["user"]) {
         },
       },
     },
-    take: 10,
   });
 
   return chats;
