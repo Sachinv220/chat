@@ -7,7 +7,6 @@ import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import ChatBubble from "./ChatBubble";
 import { Message } from "@/actions/types";
 import { createMessage } from "@/actions/post";
-import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
 
 interface LoadingMessage extends Message {
@@ -17,11 +16,10 @@ interface LoadingMessage extends Message {
 interface Props {
   chatMessages: LoadingMessage[];
   chatId: string;
+  user: Session["user"]
 }
 
-const ChatPanel: React.FC<Props> = ({ chatId, chatMessages }) => {
-  const { data: session } = useSession();
-  let user: Session["user"] = session?.user as Session["user"];
+const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user}) => {
   const [messages, setMessages] = useState(chatMessages);
   const [text, setText] = useState("");
   const [tempMessage, setTempMessage] = useState("");

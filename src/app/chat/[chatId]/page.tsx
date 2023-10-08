@@ -14,10 +14,10 @@ interface Props {
 const Page: React.FC<Props> = async ({ params }) => {
   const res = await getMessages(params.chatId);
   if (!res) redirect("/login");
-  const messages = res;
+  const {messages, user} = res;
   return (
     <div className="w-full">
-      <ChatPanel chatId={params.chatId} chatMessages={messages} />
+      <ChatPanel user={user} chatId={params.chatId} chatMessages={messages} />
     </div>
   );
 };

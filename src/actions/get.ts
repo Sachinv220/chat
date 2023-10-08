@@ -2,9 +2,14 @@
 import { prisma } from "@/lib/db";
 import { Chat, Message } from "./types";
 import { Session } from "next-auth";
+import { getAuthSession } from "@/lib/nextauth";
 
 export async function getMessages(chatId: string) {
   if (!chatId) return false;
+
+  const session = await getAuthSession();
+  if (!session) return false;
+  const { user } = session;
 
   const messages: Message[] = await prisma.message.findMany({
     select: {
@@ -25,9 +30,8 @@ export async function getMessages(chatId: string) {
         id: chatId,
       },
     },
-    take: 10,
   });
-  return messages;
+  return {messages, user};
 }
 
 export async function getChats(user: Session["user"]) {
@@ -51,7 +55,6 @@ export async function getChats(user: Session["user"]) {
         },
       },
     },
-    take: 10,
   });
 
   return chats;
