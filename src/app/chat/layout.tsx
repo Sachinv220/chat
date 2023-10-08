@@ -20,12 +20,17 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getAuthSession();
+  if (!session) return redirect("/login");
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider>
+        <Provider session={session}>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-            {children}
+            <div className="flex">
+              <Sidebar user={session.user} />
+              {children}
+            </div>
           </ThemeProvider>
         </Provider>
       </body>
