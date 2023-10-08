@@ -11,7 +11,7 @@ interface Props {
 const Chat: React.FC<Props> = ({ chat }) => {
   const { participants } = chat;
   return (
-    <Link href={`https://chatcoffee.netlify.app/chat/${chat.id}`}>
+    <Link href={`${process.env.NEXT_PUBLIC_URL}/chat/${chat.id}`}>
       <div className="flex cursor-pointer bg-slate-100 dark:bg-slate-900 h-16 px-1">
         <Album images={participants.map((par) => par.image || "")} />
         <h1 className="font-semibold text-md mt-1">{chat.name}</h1>
