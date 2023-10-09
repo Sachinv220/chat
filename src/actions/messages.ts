@@ -37,7 +37,6 @@ export async function createMessage(
   }
 }
 
-
 export async function getMessages(chatId: string) {
   if (!chatId) return false;
 
@@ -63,7 +62,16 @@ export async function getMessages(chatId: string) {
       chat: {
         id: chatId,
       },
+      AND: {
+        chat: {
+          participants: {
+            some: {
+              id: session.user.id,
+            },
+          },
+        },
+      },
     },
   });
-  return {messages, user};
+  return { messages, user };
 }
