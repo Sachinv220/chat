@@ -15,6 +15,8 @@ export const metadata: Metadata = {
   description: "Chat application",
 };
 
+export const runtime = 'edge' // 'nodejs' (default) | 'edge'
+
 export default async function Layout({
   children,
 }: {
@@ -27,9 +29,9 @@ export default async function Layout({
       <body className={inter.className}>
         <Provider session={session}>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-            <div className="flex">
+            <div className="grid grid-cols-40rem 1fr grid-rows-1">
               <Sidebar user={session.user} />
-              {children}
+              <div>{children}</div>
             </div>
           </ThemeProvider>
         </Provider>
