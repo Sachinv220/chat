@@ -1,8 +1,42 @@
 /** @format */
+"use server";
 import { prisma } from "@/lib/db";
-import { Chat, Message } from "./types";
-import { Session } from "next-auth";
+import { Message } from "./types";
 import { getAuthSession } from "@/lib/nextauth";
+
+export async function createMessage(
+  message: string,
+  chatId: string,
+  userId: string
+) {
+  try {
+    const createdMessage: Message = await prisma.message.create({
+      data: {
+        message: message,
+        chat: {
+          connect: { id: chatId },
+        },
+        user: {
+          connect: { id: userId },
+        },
+      },
+      include: {
+        user: {
+          select: {
+            image: true,
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
+    return createdMessage;
+  } catch (e) {
+    return false;
+  }
+}
+
 
 export async function getMessages(chatId: string) {
   if (!chatId) return false;
@@ -32,30 +66,4 @@ export async function getMessages(chatId: string) {
     },
   });
   return {messages, user};
-}
-
-export async function getChats(user: Session["user"]) {
-  const chats: Chat[] = await prisma.chat.findMany({
-    select: {
-      id: true,
-      name: true,
-      participants: {
-        select: {
-          name: true,
-          email: true,
-          image: true,
-          id: true,
-        },
-      },
-    },
-    where: {
-      participants: {
-        some: {
-          id: user.id,
-        },
-      },
-    },
-  });
-
-  return chats;
 }
