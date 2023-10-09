@@ -1,0 +1,31 @@
+/** @format */
+"use server"
+import { prisma } from "@/lib/db";
+import { Chat } from "./types";
+import { Session } from "next-auth";
+
+export async function getChats(user: Session["user"]) {
+  const chats: Chat[] = await prisma.chat.findMany({
+    select: {
+      id: true,
+      name: true,
+      participants: {
+        select: {
+          name: true,
+          email: true,
+          image: true,
+          id: true,
+        },
+      },
+    },
+    where: {
+      participants: {
+        some: {
+          id: user.id,
+        },
+      },
+    },
+  });
+
+  return chats;
+}

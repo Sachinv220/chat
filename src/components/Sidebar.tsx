@@ -5,7 +5,7 @@ import Chat from "./Chat";
 import SearchChat from "./SearchChat";
 import UserNav from "./UserNav";
 import { redirect } from "next/navigation";
-import { getChats } from "@/actions/get";
+import { getChats } from "@/actions/chats";
 import { Session } from "next-auth";
 
 interface Props {

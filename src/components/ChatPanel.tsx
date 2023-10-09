@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import ChatBubble from "./ChatBubble";
 import { Message } from "@/actions/types";
-import { createMessage } from "@/actions/post";
+import { createMessage } from "@/actions/messages";
 import { Session } from "next-auth";
 
 interface LoadingMessage extends Message {
