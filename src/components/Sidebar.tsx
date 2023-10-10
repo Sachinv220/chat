@@ -1,5 +1,4 @@
 /** @format */
-
 import React from "react";
 import Chat from "./Chat";
 import SearchChat from "./SearchChat";
@@ -7,6 +6,8 @@ import UserNav from "./UserNav";
 import { redirect } from "next/navigation";
 import { getChats } from "@/actions/chats";
 import { Session } from "next-auth";
+import dynamic from "next/dynamic";
+const AddChat = dynamic(() => import("@/components/AddChat"));
 
 interface Props {
   user: Session["user"];
@@ -24,9 +25,10 @@ const Sidebar: React.FC<Props> = async ({ user }) => {
           name={user.name || undefined}
           email={user.email || undefined}
         />
+        <AddChat userEmail={user.email as string} />
       </div>
       <form className="flex w-full gap-1 shadow-sm">
-        <SearchChat chats={chats.map((chat) => chat.name)} />
+        <SearchChat chats={chats.map((chat) => chat)} />
       </form>
       <div className="pt-3">
         {chats.map((chat) => (
