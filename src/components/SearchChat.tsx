@@ -1,6 +1,6 @@
 /** @format */
 "use client";
-import React, { FC, useState } from "react";
+import { useState, FC } from "react";
 import {
   Command,
   CommandEmpty,
@@ -9,9 +9,13 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { redirect } from "next/navigation";
 
 interface Props {
-  chats: string[];
+  chats: Array<{
+    id: string;
+    name: string;
+  }>;
 }
 
 const SearchChat: FC<Props> = ({ chats }) => {
@@ -25,19 +29,21 @@ const SearchChat: FC<Props> = ({ chats }) => {
           placeholder="Search..."
         />
       </div>
-      {showChats ? (
+      {showChats && (
         <CommandList>
           <CommandEmpty>No Chats found.</CommandEmpty>
           <CommandGroup heading="Chats">
             {chats.map((chat, index) => (
-              <CommandItem className="cursor-pointer" key={index}>
-                {chat}
+              <CommandItem
+                onClick={() => redirect(`/chat/${chat.id}`)}
+                className="cursor-pointer"
+                key={index}
+              >
+                {chat.name}
               </CommandItem>
             ))}
           </CommandGroup>
         </CommandList>
-      ) : (
-        ""
       )}
     </Command>
   );
