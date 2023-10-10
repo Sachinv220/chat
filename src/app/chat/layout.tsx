@@ -2,7 +2,6 @@
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Provider from "@/components/Provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import Sidebar from "@/components/Sidebar";
 import { getAuthSession } from "@/lib/nextauth";
@@ -25,14 +24,12 @@ export default async function Layout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider session={session}>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-            <div className="flex">
-              <Sidebar user={session.user} />
-              {children}
-            </div>
-          </ThemeProvider>
-        </Provider>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <div className="flex">
+            <Sidebar user={session.user} />
+            {children}
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
