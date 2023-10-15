@@ -1,29 +1,27 @@
 /** @format */
 
+import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
 
-interface SpinnerProps {
-  size?: "small" | "medium" | "large";
-}
-
-const Spinner: React.FC<SpinnerProps> = ({ size = "medium" }) => {
-  const spinnerSizeClasses = {
-    small: "w-5 h-5",
-    medium: "w-8 h-8",
-    large: "w-12 h-12",
-  };
-
+function RandomSkeleton() {
+  const align = Math.round(Math.random());
   return (
-    <div
-      className={`border-t-4 border-blue-500 border-solid rounded-full animate-spin ${spinnerSizeClasses[size]}`}
-    ></div>
+    <div className={`flex items-center space-x-4 mt-3 ${align && "ml-auto"}`}>
+      <Skeleton className="h-12 w-12 rounded-full" /> 
+      <div className="space-y-2">
+        <Skeleton className="h-7 w-[250px]" />
+        <Skeleton className="h-7 w-[200px]" />
+      </div>
+    </div>
   );
-};
+}
 
 const Loading = () => {
   return (
-    <div className="w-full flex items-center justify-center min-h-full">
-      <Spinner size="large" />
+    <div className="flex flex-col w-full min-h-full px-3">
+      {[...Array(10)].map((_, index) => (
+        <RandomSkeleton key={index} />
+      ))}
     </div>
   );
 };
