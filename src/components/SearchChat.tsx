@@ -9,7 +9,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface Props {
   chats: Array<{
@@ -20,6 +20,7 @@ interface Props {
 
 const SearchChat: FC<Props> = ({ chats }) => {
   const [showChats, setShowChats] = useState(false);
+  const router = useRouter();
   return (
     <Command className="max-lg">
       <div className="dark:bg-slate-900 bg-slate-100 ">
@@ -35,7 +36,7 @@ const SearchChat: FC<Props> = ({ chats }) => {
           <CommandGroup heading="Chats">
             {chats.map((chat, index) => (
               <CommandItem
-                onClick={() => redirect(`/chat/${chat.id}`)}
+                onClickCapture={() => router.push(`/chat/${chat.id}`)}
                 className="cursor-pointer"
                 key={index}
               >
