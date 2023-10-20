@@ -44,6 +44,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
+    "encoding": "^0.1.13",
     "prettier": "^3.0.3",
     "prisma": "^5.4.1"
   }

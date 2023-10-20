@@ -1,6 +1,6 @@
 /** @format */
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
@@ -8,6 +8,8 @@ import ChatBubble from "./ChatBubble";
 import { Message } from "@/actions/types";
 import { createMessage } from "@/actions/messages";
 import { Session } from "next-auth";
+import { pusherClient } from "@/lib/pusher";
+import { deleteMessage as remove } from "@/actions/messages";
 
 interface LoadingMessage extends Message {
   loading?: boolean;
@@ -16,10 +18,10 @@ interface LoadingMessage extends Message {
 interface Props {
   chatMessages: LoadingMessage[];
   chatId: string;
-  user: Session["user"]
+  user: Session["user"];
 }
 
-const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user}) => {
+const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
   const [messages, setMessages] = useState(chatMessages);
   const [text, setText] = useState("");
   const [tempMessage, setTempMessage] = useState("");
@@ -27,9 +29,34 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user}) => {
   async function handleSubmit() {
     setTempMessage(text);
     const message = await createMessage(text, chatId, user?.id || "");
-    if (!message) return;
-    setMessages([...messages, message]);
-    setTempMessage("");
+    if (message) {
+      setMessages([...messages, message]);
+      setTempMessage("");
+    }
+  }
+
+  useEffect(() => {
+    pusherClient.subscribe(chatId);
+
+    const handleNewMessage = (message: Message) => {
+      if (message.id !== messages.at(-1)?.id)
+        setMessages((prev) => {
+          return [...prev, message];
+        });
+    };
+
+    pusherClient.bind("add_message", handleNewMessage);
+
+    return () => {
+      pusherClient.unsubscribe(chatId);
+      pusherClient.unbind("add_message", handleNewMessage);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatId]);
+
+  async function deleteMessage(messageId: string) {
+    setMessages(messages.filter((message) => message.id !== messageId));
+    await remove(messageId);
   }
 
   return (
@@ -37,6 +64,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user}) => {
       <div>
         {messages.map((message) => (
           <ChatBubble
+            onDelete={deleteMessage}
             align={message.user.id === user.id}
             key={message.id}
             message={message}
@@ -44,9 +72,10 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user}) => {
         ))}
         {tempMessage && (
           <ChatBubble
-            align={true}
+            onDelete={() => {}}
+            align
+            loading
             key={Math.random().toString()}
-            loading={true}
             message={{
               dateTime: new Date(),
               id: Math.random().toString(),

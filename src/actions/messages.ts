@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/db";
 import { Message } from "./types";
 import { getAuthSession } from "@/lib/nextauth";
+import { pusherServer } from "@/lib/pusher";
 
 export async function createMessage(
   message: string,
@@ -31,6 +32,7 @@ export async function createMessage(
         },
       },
     });
+    await pusherServer.trigger(chatId, "add_message", createdMessage);
     return createdMessage;
   } catch (e) {
     return false;
@@ -74,4 +76,14 @@ export async function getMessages(chatId: string) {
     },
   });
   return { messages, user };
+}
+
+export async function deleteMessage(messageId: string) {
+  try {
+    await prisma.message.delete({
+      where: {
+        id: messageId,
+      },
+    });
+  } catch (e) {}
 }
