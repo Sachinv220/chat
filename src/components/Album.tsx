@@ -8,7 +8,7 @@ interface Props {
 
 const Album: React.FC<Props> = ({ images }) => {
   return (
-    <div className="grid grid-rows-2 mt-2 w-5 grid-cols-2 my-auto mr-6">
+    <div className="grid grid-rows-2 mt-1 w-5 grid-cols-2 my-auto mr-6">
       <Avatar>
         {images.map((image, index) => (
           <Image

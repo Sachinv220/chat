@@ -10,6 +10,7 @@ import { createMessage } from "@/actions/messages";
 import { Session } from "next-auth";
 import { pusherClient } from "@/lib/pusher";
 import { deleteMessage as remove } from "@/actions/messages";
+import { generateMessage } from "@/lib/utils";
 
 interface LoadingMessage extends Message {
   loading?: boolean;
@@ -62,28 +63,16 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
   return (
     <div className="flex flex-col w-full h-full p-3">
       <div>
-        {messages.map((message) => (
+        {messages.map((message, index) => (
           <ChatBubble
             onDelete={deleteMessage}
             align={message.user.id === user.id}
             key={message.id}
             message={message}
+            icon={messages[index].user.id !== messages.at(index - 1)?.user.id}
           />
         ))}
-        {tempMessage && (
-          <ChatBubble
-            onDelete={() => {}}
-            align
-            loading
-            key={Math.random().toString()}
-            message={{
-              dateTime: new Date(),
-              id: Math.random().toString(),
-              message: tempMessage,
-              user: user,
-            }}
-          />
-        )}
+        {tempMessage && <ChatBubble {...generateMessage(tempMessage, user)} />}
       </div>
       <div className="flex gap-3 mt-auto ">
         <Input
