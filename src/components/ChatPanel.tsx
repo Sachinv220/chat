@@ -60,6 +60,12 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
     await remove(messageId);
   }
 
+  function showIcon(index: number) {
+    return (
+      messages[index].user.id !== messages.at(index - 1)?.user.id || !index
+    );
+  }
+
   return (
     <div className="flex flex-col w-full h-full p-3">
       <div>
@@ -69,7 +75,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
             align={message.user.id === user.id}
             key={message.id}
             message={message}
-            icon={messages[index].user.id !== messages.at(index - 1)?.user.id}
+            icon={showIcon(index)}
           />
         ))}
         {tempMessage && <ChatBubble {...generateMessage(tempMessage, user)} />}
@@ -77,7 +83,9 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
       <div className="flex gap-3 mt-auto ">
         <Input
           onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" ?? handleSubmit()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSubmit();
+          }}
           placeholder="Send a Message"
           className="bg-slate-100 dark:bg-slate-900"
         />

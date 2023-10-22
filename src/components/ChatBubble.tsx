@@ -3,8 +3,8 @@
 import { Message } from "@/actions/types";
 import { getInitials } from "@/lib/utils";
 import React from "react";
-import { Avatar, AvatarImage } from "./ui/avatar";
-import { AvatarFallback } from "@radix-ui/react-avatar";
+import { Avatar } from "./ui/avatar";
+import Image from "next/image";
 import { TrashIcon } from "@radix-ui/react-icons";
 
 interface Props {
@@ -29,12 +29,14 @@ const ChatBubble: React.FC<Props> = ({
   const padding = align ? "ml-auto" : "";
   return (
     <div className={`flex w-fit mt-3 gap-1 ${padding}`}>
-      <Avatar className="mt-1 w-8 h-8">
+      <Avatar className="mt-1 w-8 h-8 rounded-full">
         {icon && (
-          <React.Fragment>
-            <AvatarImage src={message.user.image || ""} />
-            <AvatarFallback>{getInitials(message.user.name)}</AvatarFallback>
-          </React.Fragment>
+          <Image
+            alt={getInitials(message.user.name)}
+            width={100}
+            height={100}
+            src={message.user.image || ""}
+          />
         )}
       </Avatar>
       <div className={`flex flex-col w-fit rounded-md p-1 h-fit ${bg}`}>

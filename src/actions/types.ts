@@ -11,6 +11,12 @@ export type Message = {
 export type Chat = {
   id: string;
   name: string;
+  messages: {
+    user: {
+      name: string | null;
+    };
+    id: string;
+    message: string;
+  }[];
   participants: Array<Session["user"]>;
 };
-

@@ -32,7 +32,7 @@ const Sidebar: React.FC<Props> = async ({ user }) => {
       </form>
       <div className="pt-3">
         {chats.map((chat) => (
-          <Chat key={chat.id} chat={chat} />
+          <Chat lastMessage={chat.messages} key={chat.id} chat={chat} />
         ))}
       </div>
     </nav>
