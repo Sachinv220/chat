@@ -1,4 +1,5 @@
 /** @format */
+"use server"
 import { prisma } from "@/lib/db";
 import { Chat } from "./types";
 import { Session } from "next-auth";
