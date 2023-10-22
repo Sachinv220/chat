@@ -15,6 +15,7 @@ const Chat: React.FC<Props> = ({ chat, lastMessage }) => {
   const { participants } = chat;
   const id = usePathname().split("/").at(2);
   let bg = "";
+
   if (id && id == chat.id) bg = "dark:bg-slate-800 bg-slate-100";
   const message = lastMessage[0];
   return (
@@ -24,8 +25,9 @@ const Chat: React.FC<Props> = ({ chat, lastMessage }) => {
         <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
           {chat.name}
         </h3>
+
         <p className="text-sm leading-7 text-muted-foreground truncate">
-          {message.user.name}: {message.message}
+          {message ? `${message.user.name}: ${message.message}` : " "}
         </p>
         <hr className="w-full" />
       </div>
