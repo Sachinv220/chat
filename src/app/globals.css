@@ -26,7 +26,7 @@
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
   }
- 
+
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
@@ -72,4 +72,10 @@
 /* Handle or thumb of the scrollbar */
 ::-webkit-scrollbar-thumb {
   background: transparent; /* You can change this to a desired color */
+}
+
+@layer components {
+  .link {
+    @apply flex text-lg text-muted-foreground hover:text-black dark:hover:text-white;
+  }
 }

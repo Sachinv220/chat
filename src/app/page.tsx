@@ -7,14 +7,12 @@ import { Montserrat } from "next/font/google";
 const montserrat = Montserrat({ subsets: ["latin"], weight: "800" });
 
 const Navbar = () => {
-  const className =
-    "flex text-lg text-muted-foreground hover:text-black dark:hover:text-white";
   return (
     <div className="flex w-screen items-center justify-center h-12 gap-3">
-      <Link href="/chat" className={className}>
+      <Link href="/chat" className="link">
         Chat
       </Link>
-      <Link href={"/login"} className={className}>
+      <Link href={"/login"} className="link">
         Login
       </Link>
     </div>

@@ -14,14 +14,13 @@ import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { getInitials } from "@/lib/utils";
+import { Session } from "next-auth";
 
 interface Props {
-  email?: string;
-  name?: string;
-  image?: string;
+  user: Pick<Session["user"], "image" | "name" | "email">;
 }
 
-const UserNav: FC<Props> = ({ name, email, image }) => {
+const UserNav: FC<Props> = ({ user }) => {
   const { setTheme, theme } = useTheme();
   const toggleTheme = () => {
     if (theme === "dark") {
@@ -35,22 +34,17 @@ const UserNav: FC<Props> = ({ name, email, image }) => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          {image ? (
-            <Image
-              alt="Profile"
-              src={image}
-              height={50}
-              width={50}
-            />
+          {user.image ? (
+            <Image alt="Profile" src={user.image} height={50} width={50} />
           ) : (
-            <AvatarFallback>{getInitials(name)}</AvatarFallback>
+            <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
           )}
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="child:cursor-pointer">
         <DropdownMenuItem className="flex flex-col">
-          <h1 className="font-bold mr-auto">{name}</h1>
-          <h2 className="opacity-60">{email}</h2>
+          <h1 className="font-bold mr-auto">{user.name}</h1>
+          <h2 className="opacity-60">{user.email}</h2>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={toggleTheme}>
           Toggle theme &nbsp;

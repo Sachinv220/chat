@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Sidebar from "@/components/Sidebar";
 import { getAuthSession } from "@/lib/nextauth";
 import { redirect } from "next/navigation";
+import { getChats } from "@/actions/chats";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,11 +22,13 @@ export default async function Layout({
 }) {
   const session = await getAuthSession();
   if (!session) return redirect("/login");
+  const chats = await getChats(session.user);
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <Sidebar user={session.user}>{children}</Sidebar>
+          <Sidebar chats={chats} user={session.user}>{children}</Sidebar>
         </ThemeProvider>
       </body>
     </html>

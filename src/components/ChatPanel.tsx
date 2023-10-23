@@ -80,7 +80,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
         ))}
         {tempMessage && <ChatBubble {...generateMessage(tempMessage, user)} />}
       </div>
-      <div className="flex mt-auto px-8 gap-3 mb-10">
+      <div className="flex mt-auto px-8 gap-3 mb-3">
         <Input
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => {
