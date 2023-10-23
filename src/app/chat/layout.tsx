@@ -25,10 +25,7 @@ export default async function Layout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <div className="flex">
-            <Sidebar user={session.user} />
-            {children}
-          </div>
+          <Sidebar user={session.user}>{children}</Sidebar>
         </ThemeProvider>
       </body>
     </html>

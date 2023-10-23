@@ -58,3 +58,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Hide the vertical scrollbar */
+::-webkit-scrollbar {
+  width: 0.2rem; /* Adjust this value as needed */
+}
+
+/* Track for the scrollbar (optional) */
+::-webkit-scrollbar-track {
+  background: transparent; /* You can change this to a desired color */
+}
+
+/* Handle or thumb of the scrollbar */
+::-webkit-scrollbar-thumb {
+  background: transparent; /* You can change this to a desired color */
+}

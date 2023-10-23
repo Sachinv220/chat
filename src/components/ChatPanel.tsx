@@ -67,8 +67,8 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
   }
 
   return (
-    <div className="flex flex-col w-full h-full p-3">
-      <div>
+    <div className="flex flex-col h-screen px-3">
+      <div className="mb-5">
         {messages.map((message, index) => (
           <ChatBubble
             onDelete={deleteMessage}
@@ -80,7 +80,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
         ))}
         {tempMessage && <ChatBubble {...generateMessage(tempMessage, user)} />}
       </div>
-      <div className="flex gap-3 mt-auto ">
+      <div className="flex mt-auto px-8 gap-3 mb-10">
         <Input
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => {
