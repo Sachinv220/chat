@@ -1,5 +1,3 @@
 #!/bin/sh
-# This is a simple pre-commit hook script
-echo "Running pre-commit hook..."
-# Add your code formatting or linting commands here
+echo "Running pre-push hook..."
 pnpm test
