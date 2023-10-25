@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { Message } from "./types";
 import { getAuthSession } from "@/lib/nextauth";
 import { pusherServer } from "@/lib/pusher";
+import { messageQuery } from "./queries";
 
 export async function createMessage(
   message: string,
@@ -21,16 +22,7 @@ export async function createMessage(
           connect: { id: userId },
         },
       },
-      include: {
-        user: {
-          select: {
-            image: true,
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
-      },
+      ...messageQuery,
     });
     await pusherServer.trigger(chatId, "add_message", createdMessage);
     return createdMessage;
@@ -47,19 +39,7 @@ export async function getMessages(chatId: string) {
   const { user } = session;
 
   const messages: Message[] = await prisma.message.findMany({
-    select: {
-      id: true,
-      message: true,
-      user: {
-        select: {
-          id: true,
-          image: true,
-          name: true,
-          email: true,
-        },
-      },
-      dateTime: true,
-    },
+    ...messageQuery,
     where: {
       chat: {
         id: chatId,
@@ -85,5 +65,7 @@ export async function deleteMessage(messageId: string) {
         id: messageId,
       },
     });
-  } catch (e) {}
+  } catch (e) {
+    
+  }
 }

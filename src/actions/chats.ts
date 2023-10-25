@@ -1,38 +1,13 @@
 /** @format */
-"use server"
+"use server";
 import { prisma } from "@/lib/db";
 import { Chat } from "./types";
 import { Session } from "next-auth";
+import { chatQuery } from "./queries";
 
 export async function getChats(user: Session["user"]) {
   const chats: Chat[] = await prisma.chat.findMany({
-    select: {
-      id: true,
-      name: true,
-      participants: {
-        select: {
-          name: true,
-          email: true,
-          image: true,
-          id: true,
-        },
-      },
-      messages: {
-        select: {
-          id: true,
-          message: true,
-          user: {
-            select: {
-              name: true,
-            },
-          },
-        },
-        orderBy: {
-          dateTime: "desc",
-        },
-        take: 1,
-      },
-    },
+    ...chatQuery,
     where: {
       participants: {
         some: {
@@ -45,9 +20,9 @@ export async function getChats(user: Session["user"]) {
   return chats;
 }
 
-export async function createChat(name: string, participants: string[]) {
+export async function createChat(participants: string[], name?: string) {
   try {
-    const chat = await prisma.chat.create({
+    const chat: Chat = await prisma.chat.create({
       data: {
         name: name,
         participants: {
@@ -56,6 +31,7 @@ export async function createChat(name: string, participants: string[]) {
           })),
         },
       },
+      ...chatQuery,
     });
     return chat;
   } catch (e) {
