@@ -19,11 +19,10 @@ interface Props {
 }
 
 const AddChat: React.FC<Props> = ({ userEmail }) => {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
   async function helper() {
-    const chat = await createChat(name, [email, userEmail]);
+    await createChat([email, userEmail], "");
   }
 
   return (
@@ -39,18 +38,13 @@ const AddChat: React.FC<Props> = ({ userEmail }) => {
               Name
             </h3>
             <form onSubmit={helper} className="flex flex-col gap-1">
-              <Input
-                onChange={(e) => setName(e.target.value)}
-                type="text"
-                placeholder="johndoe"
-              />
               <h3 className="pl-1 font-medium text-black dark:text-white">
                 Email
               </h3>
               <Input
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
-                placeholder="johndoe@gmail.com"
+                placeholder="Email"
               />
               <Button variant="secondary" className="mt-1 bg-blue-500">
                 Enter

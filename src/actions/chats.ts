@@ -20,7 +20,7 @@ export async function getChats(user: Session["user"]) {
   return chats;
 }
 
-export async function createChat(participants: string[], name?: string) {
+export async function createChat(participants: string[], name: string) {
   try {
     const chat: Chat = await prisma.chat.create({
       data: {
