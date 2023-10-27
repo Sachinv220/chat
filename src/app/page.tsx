@@ -1,8 +1,9 @@
 /** @format */
-
 import Link from "next/link";
 import React from "react";
 import { Montserrat } from "next/font/google";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
 
 const montserrat = Montserrat({ subsets: ["latin"], weight: "800" });
 
@@ -21,27 +22,43 @@ const Navbar = () => {
 
 const Page = () => {
   return (
-    <div>
+    <>
       <Navbar />
-      <div className="flex items-center justify-center min-h-screen px-20">
-        <div className="text-center px-10 mb-20">
-          <h1
-            className={`${montserrat.className} scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl`}
-          >
-            A Chat Application built using Next.js 13, Prisma and next-auth.
-          </h1>
-          <p className="text-muted-foreground">
-            The Source code is available on{" "}
-            <Link
-              href="https://github.com/Sachinv220/chat"
-              className="underline hover:text-blue-500"
+      <div className="flex flex-col lg:px-5 px-2 items-center justify-center h-screen mb-10  text-center">
+        <div
+          className={`${montserrat.className} scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl pb-10`}
+        >
+          <h1>
+            A Chat Application built using{" "}
+            <span
+              className="bg-clip-text text-transparent
+  bg-gradient-to-r from-gray-500 to-gray-800 dark:from-gray-300 dark:to-gray-600"
             >
-              Github
-            </Link>
-          </p>
+              Next.js 13,
+            </span>{" "}
+            <span
+              className="bg-clip-text text-transparent
+  bg-gradient-to-r from-cyan-600 to-teal-500 dark:from-cyan-400 dark:to-teal-400"
+            >
+              Prisma
+            </span>{" "}
+            and next-auth
+          </h1>
         </div>
+        <div className="flex p-5 gap-5">
+          <Link href="/login">
+            <Button>Get Started</Button>
+          </Link>
+          <Button variant="outline" className="flex gap-1">
+            <GitHubLogoIcon />
+            Github
+          </Button>
+        </div>
+        <p className="text-muted-foreground">
+          A Next.js 13 Chat app built with Modern technologies{" "}
+        </p>
       </div>
-    </div>
+    </>
   );
 };
 
