@@ -40,7 +40,7 @@ model User {
 
 model Chat {
   id   String @id @default(cuid())
-  name String?
+  name String
 
   messages     Message[] @relation("Chat")
   participants User[]
