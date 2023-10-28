@@ -24,7 +24,7 @@ const Sidebar: React.FC<Props> = ({ user, children, chats }) => {
             <AddChat userEmail={user.email || ""} />
           </div>
           <form className="flex w-full gap-1 shadow-sm">
-            <SearchChat chats={chats.map((chat) => chat)} />
+            <SearchChat userId={user.id} chats={chats.map((chat) => chat)} />
           </form>
           <div className="pt-3">
             {chats.map((chat) => (

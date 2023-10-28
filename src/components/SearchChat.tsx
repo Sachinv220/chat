@@ -10,15 +10,15 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { useRouter } from "next/navigation";
+import { getChatName } from "@/lib/utils";
+import { type Chat } from "@/actions/types";
 
 interface Props {
-  chats: Array<{
-    id: string;
-    name: string;
-  }>;
+  chats: Chat[];
+  userId: string;
 }
 
-const SearchChat: FC<Props> = ({ chats }) => {
+const SearchChat: FC<Props> = ({ chats, userId }) => {
   const [showChats, setShowChats] = useState(false);
   const router = useRouter();
   return (
@@ -40,7 +40,7 @@ const SearchChat: FC<Props> = ({ chats }) => {
                 className="cursor-pointer"
                 key={index}
               >
-                {chat.name}
+                {getChatName(chat, userId)}
               </CommandItem>
             ))}
           </CommandGroup>
