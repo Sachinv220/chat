@@ -7,6 +7,7 @@ import UserNav from "./UserNav";
 import { Chat as TChat } from "@/actions/types";
 import { Session } from "next-auth";
 import AddChat from "./AddChat";
+import { usePathname } from "next/navigation";
 
 interface Props {
   user: Session["user"];
@@ -15,9 +16,13 @@ interface Props {
 }
 
 const Sidebar: React.FC<Props> = ({ user, children, chats }) => {
+  const path = usePathname().split("/");
+  let className = "";
+  if (path.length === 2) className = "sidebar";
+  if (path.length === 3) className = "sidebar-disabled";
   return (
     <React.Fragment>
-      <nav className="fixed top-0 left-0 h-screen w-[28%]">
+      <nav className={`fixed top-0 left-0 h-screen w-[28%] ${className}`}>
         <div className="flex flex-col w-full h-screen shadow-md border-r">
           <div className="flex w-full items-center p-1">
             <UserNav user={user} />
@@ -33,7 +38,9 @@ const Sidebar: React.FC<Props> = ({ user, children, chats }) => {
           </div>
         </div>
       </nav>
-      <div className="ml-[28%]">{children}</div>
+      <div className={`content-show ${className === "sidebar" && "hidden"}`}>
+        {children}
+      </div>
     </React.Fragment>
   );
 };

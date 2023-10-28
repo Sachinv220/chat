@@ -82,7 +82,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
         ))}
         {tempMessage && <ChatBubble {...generateMessage(tempMessage, user)} />}
       </div>
-      <div className="flex mt-auto px-8 gap-3 mb-3">
+      <div className="flex mt-auto lg:px-8 sm:px-1 gap-3 mb-3">
         <Input
           ref={inputRef}
           onChange={(e) => setText(e.target.value)}

@@ -1,7 +1,8 @@
+/** @format */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 @layer base {
   :root {
@@ -77,5 +78,20 @@
 @layer components {
   .link {
     @apply flex text-lg text-muted-foreground hover:text-black dark:hover:text-white;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .sidebar {
+    @apply w-screen;
+  }
+  .sidebar-disabled {
+    @apply w-0 h-0 hidden;
+  }
+}
+
+@media screen and (min-width: 550px) {
+  .content-show {
+    @apply ml-[28%];
   }
 }
