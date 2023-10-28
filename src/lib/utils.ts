@@ -1,5 +1,6 @@
 /** @format */
 
+import { Chat } from "@/actions/types";
 import { type ClassValue, clsx } from "clsx";
 import { Session } from "next-auth";
 import { twMerge } from "tailwind-merge";
@@ -28,4 +29,18 @@ export function generateMessage(message: string, user: Session["user"]) {
       user: user,
     },
   } as const;
+}
+
+export function getChatName(chat: Chat, userId: string) {
+  if (chat.participants.length > 2) {
+    return chat.name;
+  }
+  return chat.participants.find((user) => user.id !== userId)?.name;
+}
+
+export function getImages(chat: Chat, userId: string): string[] {
+  if (chat.participants.length > 2)
+    return chat.participants.map((par) => par.image || "");
+
+  return [chat.participants.find((user) => user.id !== userId)?.image || ""];
 }

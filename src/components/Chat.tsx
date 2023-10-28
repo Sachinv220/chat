@@ -5,13 +5,14 @@ import React from "react";
 import { Chat } from "@/actions/types";
 import Album from "./Album";
 import { usePathname } from "next/navigation";
+import { getChatName, getImages } from "@/lib/utils";
 
 interface Props {
   chat: Chat;
+  userId: string;
 }
 
-const Chat: React.FC<Props> = ({ chat }) => {
-  const { participants } = chat;
+const Chat: React.FC<Props> = ({ chat, userId }) => {
   const id = usePathname().split("/").at(2);
   let bg = "";
 
@@ -19,10 +20,10 @@ const Chat: React.FC<Props> = ({ chat }) => {
   const message = chat.messages.at(0);
   return (
     <Link href={`/chat/${chat.id}`} className={`flex w-full ${bg} px-1`}>
-      <Album images={participants.map((par) => par.image || "")} />
+      <Album images={getImages(chat, userId)} />
       <div className="flex flex-col w-full ml-1">
         <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
-          {chat.name}
+          {getChatName(chat, userId) || "Untitled Group"}
         </h3>
         <p className="text-sm leading-7 h-7 text-muted-foreground line-clamp-1">
           {message

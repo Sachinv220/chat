@@ -28,7 +28,7 @@ const Sidebar: React.FC<Props> = ({ user, children, chats }) => {
           </form>
           <div className="pt-3">
             {chats.map((chat) => (
-              <Chat key={chat.id} chat={chat} />
+              <Chat userId={user.id} key={chat.id} chat={chat} />
             ))}
           </div>
         </div>

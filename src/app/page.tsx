@@ -26,13 +26,13 @@ const Page = () => {
       <Navbar />
       <div className="flex flex-col lg:px-5 px-2 items-center justify-center h-screen mb-10  text-center">
         <div
-          className={`${montserrat.className} scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl pb-10`}
+          className={`${montserrat.className} scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl`}
         >
           <h1>
             A Chat Application built using{" "}
             <span
               className="bg-clip-text text-transparent
-  bg-gradient-to-r from-gray-500 to-gray-800 dark:from-gray-300 dark:to-gray-600"
+  bg-gradient-to-r from-purple-400 to-gray-800 dark:from-purple-300 dark:to-gray-600"
             >
               Next.js 13,
             </span>{" "}

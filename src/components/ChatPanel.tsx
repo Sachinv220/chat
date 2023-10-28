@@ -1,6 +1,6 @@
 /** @format */
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { ElementRef, useEffect, useRef, useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
@@ -26,8 +26,10 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
   const [messages, setMessages] = useState(chatMessages);
   const [text, setText] = useState("");
   const [tempMessage, setTempMessage] = useState("");
+  const inputRef = useRef<ElementRef<"input">>(null);
 
   async function handleSubmit() {
+    if (inputRef.current) inputRef.current.value = "";
     setTempMessage(text);
     const message = await createMessage(text, chatId, user?.id || "");
     if (message) {
@@ -82,6 +84,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
       </div>
       <div className="flex mt-auto px-8 gap-3 mb-3">
         <Input
+          ref={inputRef}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") handleSubmit();

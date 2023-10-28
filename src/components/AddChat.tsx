@@ -34,9 +34,6 @@ const AddChat: React.FC<Props> = ({ userEmail }) => {
         <DialogHeader>
           <DialogTitle>Create a Chat</DialogTitle>
           <DialogDescription className="mt-2">
-            <h3 className="pl-1 font-medium text-black dark:text-white">
-              Name
-            </h3>
             <form onSubmit={helper} className="flex flex-col gap-1">
               <h3 className="pl-1 font-medium text-black dark:text-white">
                 Email
