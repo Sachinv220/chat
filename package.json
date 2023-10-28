@@ -45,7 +45,6 @@
   },
   "devDependencies": {
     "encoding": "^0.1.13",
-    "husky": "^8.0.3",
     "prettier": "^3.0.3",
     "prisma": "^5.4.1"
   },

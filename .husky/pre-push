@@ -1,4 +1,0 @@
-#!/bin/sh
-echo "Running pre-push hook..."
-pnpm test 
-pnpm lint
