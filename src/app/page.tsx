@@ -46,13 +46,15 @@ const Page = () => {
           </h1>
         </div>
         <div className="flex p-5 gap-5">
-          <Link href="/login">
+          <a href="/chat">
             <Button>Get Started</Button>
-          </Link>
-          <Button variant="outline" className="flex gap-1">
-            <GitHubLogoIcon />
-            Github
-          </Button>
+          </a>
+          <a href="https://github.com/Sachinv220/chat">
+            <Button variant="outline" className="flex gap-1">
+              <GitHubLogoIcon />
+              Github
+            </Button>
+          </a>
         </div>
         <p className="text-muted-foreground">
           A Next.js 13 Chat app built with Modern technologies{" "}
