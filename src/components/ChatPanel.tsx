@@ -1,6 +1,13 @@
 /** @format */
 "use client";
-import React, { ElementRef, useEffect, useRef, useState } from "react";
+import React, {
+  ElementRef,
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
@@ -57,10 +64,10 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatId]);
 
-  async function deleteMessage(messageId: string) {
-    setMessages(messages.filter((message) => message.id !== messageId));
+  const handleDeleteMessage = useCallback(async (messageId: string) => {
+    setMessages((prev) => prev.filter((message) => message.id !== messageId));
     await remove(messageId);
-  }
+  }, []);
 
   function showIcon(index: number) {
     return (
@@ -73,7 +80,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
       <div className="mb-5">
         {messages.map((message, index) => (
           <ChatBubble
-            onDelete={deleteMessage}
+            onDelete={handleDeleteMessage}
             align={message.user.id === user.id}
             key={message.id}
             message={message}

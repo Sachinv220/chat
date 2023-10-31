@@ -2,7 +2,7 @@
 "use client";
 import { Message } from "@/actions/types";
 import { getInitials } from "@/lib/utils";
-import React from "react";
+import React, { memo } from "react";
 import { Avatar } from "./ui/avatar";
 import Image from "next/image";
 import { TrashIcon } from "@radix-ui/react-icons";
@@ -54,4 +54,4 @@ const ChatBubble: React.FC<Props> = ({
   );
 };
 
-export default ChatBubble;
+export default memo(ChatBubble);

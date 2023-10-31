@@ -10,12 +10,12 @@ const montserrat = Montserrat({ subsets: ["latin"], weight: "800" });
 const Navbar = () => {
   return (
     <div className="flex w-screen items-center justify-center h-12 gap-3">
-      <Link href="/chat" className="link">
+      <a href="/chat" className="link">
         Chat
-      </Link>
-      <Link href={"/login"} className="link">
+      </a>
+      <a href={"/login"} className="link">
         Login
-      </Link>
+      </a>
     </div>
   );
 };
