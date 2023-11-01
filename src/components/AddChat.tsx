@@ -16,25 +16,38 @@ import { createChat } from "@/actions/chats";
 
 interface Props {
   userEmail: string;
+  onFailure: (text: string) => any;
 }
 
-const AddChat: React.FC<Props> = ({ userEmail }) => {
+const AddChat: React.FC<Props> = ({ userEmail, onFailure }) => {
   const [email, setEmail] = useState("");
+  const [open, setOpen] = useState(false);
 
   async function helper() {
-    await createChat([email, userEmail], "");
+    const res = await createChat([email, userEmail], "");
+    if (!res) {
+      setOpen(false);
+      onFailure("The user your trying to find does not exist");
+    }
   }
 
   return (
-    <Dialog>
-      <DialogTrigger className="rounded-full bg-slate-200 dark:bg-slate-800 p-2 ml-auto">
+    <Dialog open={open} onOpenChange={(e) => setOpen(e)}>
+      <DialogTrigger
+        onClick={() => setOpen(true)}
+        className="rounded-full bg-slate-200 dark:bg-slate-800 p-2 ml-auto"
+      >
         <PlusIcon />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create a Chat</DialogTitle>
           <DialogDescription className="mt-2">
-            <form onSubmit={helper} className="flex flex-col gap-1">
+            <form
+              method="post"
+              onSubmit={helper}
+              className="flex flex-col gap-1"
+            >
               <h3 className="pl-1 font-medium text-black dark:text-white">
                 Email
               </h3>

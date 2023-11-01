@@ -13,7 +13,7 @@ const Navbar = () => {
       <a href="/chat" className="link">
         Chat
       </a>
-      <a href={"/login"} className="link">
+      <a href="/login" className="link">
         Login
       </a>
     </div>
