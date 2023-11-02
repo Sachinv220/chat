@@ -44,7 +44,6 @@ const AddChat: React.FC<Props> = ({ userEmail, onFailure }) => {
           <DialogTitle>Create a Chat</DialogTitle>
           <DialogDescription className="mt-2">
             <form
-              method="post"
               onSubmit={helper}
               className="flex flex-col gap-1"
             >
