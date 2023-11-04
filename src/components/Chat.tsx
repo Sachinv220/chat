@@ -2,13 +2,13 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import { Chat } from "@/actions/types";
+import { type Chat as TChat } from "@/actions/types";
 import Album from "./Album";
 import { usePathname } from "next/navigation";
 import { getChatName, getImages } from "@/lib/utils";
 
 interface Props {
-  chat: Chat;
+  chat: TChat;
   userId: string;
 }
 

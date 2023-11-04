@@ -1,5 +1,4 @@
 /** @format */
-import Link from "next/link";
 import React from "react";
 import { Montserrat } from "next/font/google";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";

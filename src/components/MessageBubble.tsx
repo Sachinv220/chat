@@ -15,7 +15,7 @@ interface Props {
   onDelete: (messageId: string) => any;
 }
 
-const ChatBubble: React.FC<Props> = ({
+const MessageBubble: React.FC<Props> = ({
   message,
   align,
   loading,
@@ -54,4 +54,4 @@ const ChatBubble: React.FC<Props> = ({
   );
 };
 
-export default memo(ChatBubble);
+export default memo(MessageBubble);

@@ -2,7 +2,6 @@
 "use client";
 import React, {
   ElementRef,
-  memo,
   useCallback,
   useEffect,
   useRef,
@@ -11,7 +10,7 @@ import React, {
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
-import ChatBubble from "./ChatBubble";
+import MessageBubble from "./MessageBubble";
 import { Message } from "@/actions/types";
 import { createMessage } from "@/actions/messages";
 import { Session } from "next-auth";
@@ -76,34 +75,38 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
   }
 
   return (
-    <div className="flex flex-col h-screen px-3">
-      <div className="mb-5">
-        {messages.map((message, index) => (
-          <ChatBubble
-            onDelete={handleDeleteMessage}
-            align={message.user.id === user.id}
-            key={message.id}
-            message={message}
-            icon={showIcon(index)}
+    <React.Fragment>
+      <div className="flex flex-col h-screen px-3">
+        <div className="mb-5">
+          {messages.map((message, index) => (
+            <MessageBubble
+              onDelete={handleDeleteMessage}
+              align={message.user.id === user.id}
+              key={message.id}
+              message={message}
+              icon={showIcon(index)}
+            />
+          ))}
+          {tempMessage && (
+            <MessageBubble {...generateMessage(tempMessage, user)} />
+          )}
+        </div>
+        <div className="flex mt-auto lg:px-8 sm:px-1 gap-3 mb-3">
+          <Input
+            ref={inputRef}
+            onChange={(e) => setText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSubmit();
+            }}
+            placeholder="Send a Message"
+            className="bg-slate-100 dark:bg-slate-900"
           />
-        ))}
-        {tempMessage && <ChatBubble {...generateMessage(tempMessage, user)} />}
+          <Button onClick={handleSubmit}>
+            <PaperPlaneIcon />
+          </Button>
+        </div>
       </div>
-      <div className="flex mt-auto lg:px-8 sm:px-1 gap-3 mb-3">
-        <Input
-          ref={inputRef}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleSubmit();
-          }}
-          placeholder="Send a Message"
-          className="bg-slate-100 dark:bg-slate-900"
-        />
-        <Button onClick={handleSubmit}>
-          <PaperPlaneIcon />
-        </Button>
-      </div>
-    </div>
+    </React.Fragment>
   );
 };
 
