@@ -28,7 +28,9 @@ export default async function Layout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <Sidebar chats={chats} user={session.user}>{children}</Sidebar>
+          <Sidebar allChats={chats} user={session.user}>
+            {children}
+          </Sidebar>
         </ThemeProvider>
       </body>
     </html>

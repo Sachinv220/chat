@@ -13,21 +13,26 @@ import React, { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { createChat } from "@/actions/chats";
+import { Chat } from "@/actions/types";
 
 interface Props {
   userEmail: string;
   onFailure: (text: string) => any;
+  onSuccess: (chat: Chat) => any;
 }
 
-const AddChat: React.FC<Props> = ({ userEmail, onFailure }) => {
+const AddChat: React.FC<Props> = ({ userEmail, onFailure, onSuccess }) => {
   const [email, setEmail] = useState("");
   const [open, setOpen] = useState(false);
 
   async function helper() {
     const res = await createChat([email, userEmail], "");
+    setOpen(false);
     if (!res) {
-      setOpen(false);
       onFailure("The user your trying to find does not exist");
+    } else {
+      console.log("here");
+      onSuccess(res);
     }
   }
 
@@ -43,10 +48,7 @@ const AddChat: React.FC<Props> = ({ userEmail, onFailure }) => {
         <DialogHeader>
           <DialogTitle>Create a Chat</DialogTitle>
           <DialogDescription className="mt-2">
-            <form
-              onSubmit={helper}
-              className="flex flex-col gap-1"
-            >
+            <section className="flex flex-col gap-1">
               <h3 className="pl-1 font-medium text-black dark:text-white">
                 Email
               </h3>
@@ -54,11 +56,18 @@ const AddChat: React.FC<Props> = ({ userEmail, onFailure }) => {
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 placeholder="Email"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") helper();
+                }}
               />
-              <Button variant="secondary" className="mt-1 bg-blue-500">
+              <Button
+                onClick={helper}
+                variant="secondary"
+                className="mt-1 bg-blue-500"
+              >
                 Enter
               </Button>
-            </form>
+            </section>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
