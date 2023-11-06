@@ -10,7 +10,6 @@ interface Props {
     chatId: string;
   };
 }
-export const dynamic = "force-dynamic";
 
 const Page: React.FC<Props> = async ({ params }) => {
   const res = await getMessages(params.chatId);

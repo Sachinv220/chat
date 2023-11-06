@@ -35,6 +35,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
   const inputRef = useRef<ElementRef<"input">>(null);
 
   async function handleSubmit() {
+    inputRef.current?.focus();
     if (inputRef.current) inputRef.current.value = "";
     setTempMessage(text);
     const message = await createMessage(text, chatId, user?.id || "");
@@ -45,6 +46,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
   }
 
   useEffect(() => {
+    inputRef.current?.focus();
     pusherClient.subscribe(chatId);
 
     const handleNewMessage = (message: Message) => {
@@ -70,7 +72,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
 
   function showIcon(index: number) {
     return (
-      messages[index].user.id !== messages.at(index - 1)?.user.id || !index
+      messages.at(index)?.user.id !== messages.at(index - 1)?.user.id || !index
     );
   }
 
