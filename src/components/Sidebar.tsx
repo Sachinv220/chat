@@ -10,6 +10,7 @@ import AddChat from "./AddChat";
 import { usePathname } from "next/navigation";
 import { Toaster, toast } from "sonner";
 import { useTheme } from "next-themes";
+import { DataProvider } from "./data-provider";
 
 interface Props {
   user: Session["user"];
@@ -30,7 +31,7 @@ const Sidebar: React.FC<Props> = ({ user, children, allChats }) => {
   }
 
   return (
-    <React.Fragment>
+    <DataProvider value={{ chats }}>
       <Toaster
         richColors
         theme={resolvedTheme as "light" | "dark" | "system" | undefined}
@@ -58,7 +59,7 @@ const Sidebar: React.FC<Props> = ({ user, children, allChats }) => {
       <div className={`content-show ${className === "sidebar" && "hidden"}`}>
         {children}
       </div>
-    </React.Fragment>
+    </DataProvider>
   );
 };
 

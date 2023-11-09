@@ -31,7 +31,6 @@ const AddChat: React.FC<Props> = ({ userEmail, onFailure, onSuccess }) => {
     if (!res) {
       onFailure("The user your trying to find does not exist");
     } else {
-      console.log("here");
       onSuccess(res);
     }
   }

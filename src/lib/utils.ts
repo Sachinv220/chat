@@ -31,14 +31,16 @@ export function generateMessage(message: string, user: Session["user"]) {
   } as const;
 }
 
-export function getChatName(chat: Chat, userId: string) {
+export function getChatName(chat: Chat | null, userId: string) {
+  if (!chat) return ""
   if (chat.participants.length > 2) {
     return chat.name;
   }
   return chat.participants.find((user) => user.id !== userId)?.name;
 }
 
-export function getImages(chat: Chat, userId: string): string[] {
+export function getImages(chat: Chat | null, userId: string): string[] {
+  if (!chat) return [""];
   if (chat.participants.length > 2)
     return chat.participants.map((par) => par.image || "");
 

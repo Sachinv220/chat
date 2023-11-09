@@ -17,6 +17,7 @@ import { Session } from "next-auth";
 import { pusherClient } from "@/lib/pusher";
 import { deleteMessage as remove } from "@/actions/messages";
 import { generateMessage } from "@/lib/utils";
+import Navbar from "./Navbar";
 
 interface LoadingMessage extends Message {
   loading?: boolean;
@@ -78,7 +79,8 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
 
   return (
     <React.Fragment>
-      <div className="flex flex-col h-screen px-3">
+      <Navbar userId={user.id} />
+      <div className="flex flex-col mt-16 h-screen px-3">
         <div className="mb-5">
           {messages.map((message, index) => (
             <MessageBubble
@@ -93,7 +95,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
             <MessageBubble {...generateMessage(tempMessage, user)} />
           )}
         </div>
-        <div className="flex mt-auto lg:px-8 sm:px-1 gap-3 mb-3">
+        <div className="flex mt-auto lg:px-8 sm:px-1 gap-3">
           <Input
             ref={inputRef}
             onChange={(e) => setText(e.target.value)}
