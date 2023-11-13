@@ -1,3 +1,12 @@
 # Real-Time Chat App
+A Real Time Chat [website](https://chatcoffee.vercel.app/)
+## Technologies
+* Next.js 13
+* Prisma Orm and client
+* next-auth
+* shadcn-ui
+* Cockroach DB
 
-This is a real-time chat application built using Prisma, Next.js, NextAuth.js, Tailwind CSS, and Shadcn. It allows users to sign in, join chat rooms, and send real-time messages to other users in those rooms. currently under development
+## Features
+* Real Time chat
+* Group Chats
