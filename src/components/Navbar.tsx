@@ -32,7 +32,7 @@ const Navbar: React.FC<Props> = ({ userId }) => {
             {getChatName(currentChat || null, userId)}
           </h3>
           <p className="text-muted-foreground text-sm">
-            {currentChat?.participants.map((p) => p.name + ", ")}
+            {DisplayParticipants()}
           </p>
         </div>
         <div className="fixed top-4 right-3">
@@ -53,6 +53,15 @@ const Navbar: React.FC<Props> = ({ userId }) => {
       </div>
     </div>
   );
+
+  function DisplayParticipants(): React.ReactNode {
+    return currentChat?.participants.map((p, index) => {
+      return (
+        p.name +
+        (index !== currentChat.participants.length - 1 ? ", " : "")
+      );
+    });
+  }
 };
 
 export default Navbar;

@@ -28,7 +28,7 @@ const MessageBubble: React.FC<Props> = ({
   if (loading) bg = "dark:bg-slate-800 bg-slate-200";
   const padding = align ? "ml-auto" : "";
   return (
-    <div className={`flex w-fit mt-3 gap-1 ${padding}`}>
+    <div className={`flex w-fit mt-3 gap-1 px-4 ${padding}`}>
       <Avatar className="mt-1 w-8 h-8 rounded-full">
         {icon && (
           <Image
