@@ -2,6 +2,7 @@
 
 import { getMessages } from "@/actions/messages";
 import ChatPanel from "@/components/ChatPanel";
+import Navbar from "@/components/Navbar";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -17,6 +18,7 @@ const Page: React.FC<Props> = async ({ params }) => {
   const { messages, user } = res;
   return (
     <div className="w-full">
+      <Navbar userId={user.id} />
       <ChatPanel user={user} chatId={params.chatId} chatMessages={messages} />
     </div>
   );

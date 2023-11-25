@@ -17,7 +17,6 @@ import { Session } from "next-auth";
 import { pusherClient } from "@/lib/pusher";
 import { deleteMessage as remove } from "@/actions/messages";
 import { generateMessage } from "@/lib/utils";
-import Navbar from "./Navbar";
 
 interface LoadingMessage extends Message {
   loading?: boolean;
@@ -79,31 +78,36 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
 
   return (
     <React.Fragment>
-      <Navbar userId={user.id} />
-      <div className="flex flex-col mt-16 h-screen px-3">
-        <div className="mb-5">
-          {messages.map((message, index) => (
-            <MessageBubble
-              onDelete={handleDeleteMessage}
-              align={message.user.id === user.id}
-              key={message.id}
-              message={message}
-              icon={showIcon(index)}
-            />
-          ))}
-          {tempMessage && (
-            <MessageBubble {...generateMessage(tempMessage, user)} />
-          )}
-        </div>
-        <div className="flex mt-auto lg:px-8 sm:px-1 gap-3">
+      <div className="flex flex-col pt-10 h-screen px-3 gap-5 mb-10">
+        <div className="w-10 h-10"></div>
+        {messages.map((message, index) => (
+          <MessageBubble
+            onDelete={handleDeleteMessage}
+            align={message.user.id === user.id}
+            key={message.id}
+            message={message}
+            icon={showIcon(index)}
+          />
+        ))}
+        {messages.length === 0 && (
+          <h1 className="mt-10 text-center scroll-m-20 text-2xl font-semibold tracking-tight">
+            No Messages in this Chat
+          </h1>
+        )}
+        {tempMessage && (
+          <MessageBubble {...generateMessage(tempMessage, user)} />
+        )}
+      </div>
+      <div className="fixed bottom-0 w-full h-10 backdrop-blur-md mt-10">
+        <div className="flex px-3 gap-1">
           <Input
             ref={inputRef}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSubmit();
             }}
+            className="w-[67%]"
             placeholder="Send a Message"
-            className="bg-slate-100 dark:bg-slate-900"
           />
           <Button onClick={handleSubmit}>
             <PaperPlaneIcon />

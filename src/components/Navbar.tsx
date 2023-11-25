@@ -24,9 +24,12 @@ const Navbar: React.FC<Props> = ({ userId }) => {
   const { chats } = useChatData();
   const currentChat = chats.filter((chat) => chat.id === id).at(0);
   return (
-    <div className="fixed top-0 flex flex-col p-3 w-full h-15 bg-slate-50 dark:bg-slate-900 z-10">
+    <div className="fixed top-0 flex flex-col p-3 w-full h-20 bg-slate-100 dark:bg-slate-900 z-10">
       <div className="flex w-full gap-1">
-        <Album images={getImages(currentChat || null, userId)} className="mb-1" />
+        <Album
+          images={getImages(currentChat || null, userId)}
+          className="mb-1"
+        />
         <div className="flex flex-col">
           <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
             {getChatName(currentChat || null, userId)}
