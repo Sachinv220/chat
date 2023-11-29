@@ -77,7 +77,7 @@
 
 @layer components {
   .link {
-    @apply flex text-lg text-muted-foreground hover:text-black dark:hover:text-white;
+    @apply opacity-50 hover:opacity-100;
   }
 }
 

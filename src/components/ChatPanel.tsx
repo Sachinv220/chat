@@ -79,7 +79,6 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
   return (
     <React.Fragment>
       <div className="flex flex-col pt-10 h-screen px-3 gap-5 mb-10">
-        <div className="w-10 h-10"></div>
         {messages.map((message, index) => (
           <MessageBubble
             onDelete={handleDeleteMessage}
