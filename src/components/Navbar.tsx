@@ -24,6 +24,7 @@ const Navbar: React.FC<Props> = ({ userId }) => {
   const { chats } = useChatData();
   const currentChat = chats.filter((chat) => chat.id === id).at(0);
   return (
+      <React.Fragment>
     <div className="fixed top-0 flex flex-col p-3 w-full h-20 bg-slate-100 dark:bg-slate-900 z-10">
       <div className="flex w-full gap-1">
         <Album
@@ -55,6 +56,8 @@ const Navbar: React.FC<Props> = ({ userId }) => {
         </div>
       </div>
     </div>
+        <div className="h-12"></div>
+      </React.Fragment>
   );
 
   function DisplayParticipants(): React.ReactNode {
