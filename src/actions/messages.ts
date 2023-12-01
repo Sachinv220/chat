@@ -12,6 +12,17 @@ export async function createMessage(
   userId: string
 ) {
   try {
+    await prisma.chat.findFirstOrThrow({
+      where: {
+        id: chatId,
+        participants: {
+          some: {
+            id: userId,
+          },
+        },
+      },
+    });
+
     const createdMessage: Message = await prisma.message.create({
       data: {
         message: message,
@@ -66,6 +77,6 @@ export async function deleteMessage(messageId: string) {
       },
     });
   } catch (e) {
-    
+    return false;
   }
 }
