@@ -4,13 +4,14 @@ import { Montserrat } from "next/font/google";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Logo from "@/components/Logo";
 
 const montserrat = Montserrat({ subsets: ["latin"], weight: "800" });
 
 const Navbar = () => {
   return (
     <div className="flex w-screen items-center h-12 pt-1">
-      <Image width={90} height={90} src="/favicon.webp" alt="Logo" />
+      <Logo />
       <div className="child:link">
         <a href="/chat">
           <Button className="text-lg" variant="link">
