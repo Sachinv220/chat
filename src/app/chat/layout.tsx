@@ -1,3 +1,5 @@
+/** @format */
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -10,7 +12,7 @@ import React from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Chat Coffee",
+  title: "Chat Coffee | Chats",
   description: "Chat application",
 };
 
@@ -26,8 +28,8 @@ export default async function Layout({
   return (
     <html lang="en">
       <head>
-          <title>Chat Coffee | Chats</title>
-          <link rel="icon" href="/favicon.png" />
+        <title>Chat Coffee | Chats</title>
+        <link rel="icon" href="/favicon.png" />
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
