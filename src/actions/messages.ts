@@ -1,10 +1,11 @@
 /** @format */
 "use server";
 import { prisma } from "@/lib/db";
-import { Message } from "./types";
+import { Message, Response } from "./types";
 import { getAuthSession } from "@/lib/nextauth";
 import { pusherServer } from "@/lib/pusher";
 import { messageQuery } from "./queries";
+import { redirect } from "next/navigation";
 
 export async function createMessage(
   message: string,
@@ -38,35 +39,36 @@ export async function createMessage(
     await pusherServer.trigger(chatId, "add_message", createdMessage);
     return createdMessage;
   } catch (e) {
-    return false;
+    return Response.SERVER_ERROR;
   }
 }
 
 export async function getMessages(chatId: string) {
-  if (!chatId) return false;
-
   const session = await getAuthSession();
-  if (!session) return false;
+  if (!session) return redirect("/login");
   const { user } = session;
-
-  const messages: Message[] = await prisma.message.findMany({
-    ...messageQuery,
-    where: {
-      chat: {
-        id: chatId,
-      },
-      AND: {
+  try {
+    const messages: Message[] = await prisma.message.findMany({
+      ...messageQuery,
+      where: {
         chat: {
-          participants: {
-            some: {
-              id: session.user.id,
+          id: chatId,
+        },
+        AND: {
+          chat: {
+            participants: {
+              some: {
+                id: session.user.id,
+              },
             },
           },
         },
       },
-    },
-  });
-  return { messages, user };
+    });
+    return { messages, user };
+  } catch (e) {
+    return Response.SERVER_ERROR;
+  }
 }
 
 export async function deleteMessage(messageId: string) {
@@ -77,6 +79,6 @@ export async function deleteMessage(messageId: string) {
       },
     });
   } catch (e) {
-    return false;
+    return Response.SERVER_ERROR;
   }
 }
