@@ -13,7 +13,7 @@ import React, { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { createChat } from "@/actions/chats";
-import { Chat } from "@/actions/types";
+import { Chat, Response } from "@/actions/types";
 
 interface Props {
   userEmail: string;
@@ -28,7 +28,7 @@ const AddChat: React.FC<Props> = ({ userEmail, onFailure, onSuccess }) => {
   async function helper() {
     const res = await createChat([email, userEmail], "");
     setOpen(false);
-    if (!res) {
+    if (res === Response.SERVER_ERROR) {
       onFailure("The user your trying to find does not exist");
     } else {
       onSuccess(res);

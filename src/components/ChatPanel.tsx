@@ -11,7 +11,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import MessageBubble from "./MessageBubble";
-import { Message } from "@/actions/types";
+import { Message, Response } from "@/actions/types";
 import { createMessage } from "@/actions/messages";
 import { Session } from "next-auth";
 import { pusherClient } from "@/lib/pusher";
@@ -39,7 +39,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
     if (inputRef.current) inputRef.current.value = "";
     setTempMessage(text);
     const message = await createMessage(text, chatId, user?.id || "");
-    if (message) {
+    if (message !== Response.SERVER_ERROR) {
       setMessages([...messages, message]);
       setTempMessage("");
     }
