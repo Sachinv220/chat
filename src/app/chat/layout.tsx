@@ -8,6 +8,7 @@ import { getAuthSession } from "@/lib/nextauth";
 import { redirect } from "next/navigation";
 import { getChats } from "@/actions/chats";
 import React from "react";
+import { Response } from "@/actions/types";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,9 +34,15 @@ export default async function Layout({
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Sidebar allChats={chats} user={session.user}>
-            {children}
-          </Sidebar>
+          {chats !== Response.SERVER_ERROR ? (
+            <Sidebar allChats={chats} user={session.user}>
+              {children}
+            </Sidebar>
+          ) : (
+            <div className="min-h-screen">
+              <h1>Failed to Get Your Data</h1>
+            </div>
+          )}
         </ThemeProvider>
       </body>
     </html>

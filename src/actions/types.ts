@@ -1,6 +1,10 @@
 /** @format */
 import { Session } from "next-auth";
 
+export enum Response {
+  SERVER_ERROR = 500,
+}
+
 export type Message = {
   user: Session["user"];
   message: string;

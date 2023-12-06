@@ -1,23 +1,27 @@
 /** @format */
 "use server";
 import { prisma } from "@/lib/db";
-import { Chat } from "./types";
+import { Chat, Response } from "./types";
 import { Session } from "next-auth";
 import { chatQuery } from "./queries";
 
 export async function getChats(user: Session["user"]) {
-  const chats: Chat[] = await prisma.chat.findMany({
-    ...chatQuery,
-    where: {
-      participants: {
-        some: {
-          id: user.id,
+  try {
+    const chats: Chat[] = await prisma.chat.findMany({
+      ...chatQuery,
+      where: {
+        participants: {
+          some: {
+            id: user.id,
+          },
         },
       },
-    },
-  });
+    });
 
-  return chats;
+    return chats;
+  } catch (e) {
+    return Response.SERVER_ERROR;
+  }
 }
 
 export async function createChat(participants: string[], name: string) {
@@ -35,6 +39,6 @@ export async function createChat(participants: string[], name: string) {
     });
     return chat;
   } catch (e) {
-    return false;
+    return Response.SERVER_ERROR;
   }
 }
