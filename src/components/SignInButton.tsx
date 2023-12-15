@@ -13,7 +13,7 @@ const SignInButton: React.FC<{ className?: string }> = ({ className }) => {
     <Button
       onClick={() => signIn("google").catch(console.error)}
       className={cn("gap-1 font-bold", className)}
-      variant="outline"
+      variant="secondary"
     >
       Login With
       <FcGoogle />
