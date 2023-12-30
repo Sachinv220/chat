@@ -1,22 +1,39 @@
 /** @format */
 "use client";
-import React, { useEffect } from "react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
-import Logo, { DarkImage, ToggleTheme } from "@/components/Logo";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import ToggleTheme from "@/components/ToggleTheme";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import React, { ReactNode, useEffect, useState } from "react";
+import {
+  NextAuthIcon,
+  NextIcon,
+  ReactIcon,
+  TailwindIcon,
+} from "@/components/Icons";
+import Image from "next/image";
 import { useTheme } from "next-themes";
 
-const features: Array<{ image: string; title?: string; content?: string }> = [
+const features: Array<CardProps> = [
   {
-    image: "/next-icon.png",
+    image: NextIcon,
     title: "Nextjs.14",
     content: "App dir, Routing, Layouts, Loading UI and Server functions",
   },
   {
-    image: "/tailwind-icon.png",
-    title: "Nextjs.14",
-    content: "App dir, Routing, Layouts, Loading UI and Server functions",
+    image: TailwindIcon,
+    title: "Tailwind CSS",
+    content: "Shadcn UI Components styled with Tailwind CSS.",
+  },
+  {
+    image: NextAuthIcon,
+    title: "Authentication",
+    content: "Authentication using NextAuth.js and middlewares",
+  },
+  {
+    image: ReactIcon,
+    title: "React",
+    content: "Server and Client Components. Use hook.",
   },
 ];
 
@@ -36,14 +53,14 @@ const Navbar = () => {
           </Button>
         </a>
       </div>
-      <ToggleTheme className="ml-auto mr-1" />
+      <ToggleTheme variant="secondary" className="ml-auto mr-1" />
     </div>
   );
 };
 
 const Page = () => {
   return (
-    <>
+    <div className="max-h-screen">
       <Navbar />
       <div className="flex flex-col lg:px-5 px-2 items-center justify-center h-[70vh] text-center">
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
@@ -65,10 +82,10 @@ const Page = () => {
         </div>
       </div>
       <div>
-        <h1 className="text-4xl font-extrabold scroll-m-20 tracking-tight mb-5 text-center">
+        <h1 className="text-4xl font-extrabold scroll-m-20 pb-2 tracking-tight text-center">
           Features
         </h1>
-        <div className="grid grid-rows-3 grid-cols-3 gap-5 px-4">
+        <div className="features px-1">
           {features.map((ft, index) => (
             <SimpleCard
               key={index}
@@ -79,28 +96,55 @@ const Page = () => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
 interface CardProps {
-  image: string;
+  image: ReactNode;
   title?: string;
   content?: string;
 }
 
 const SimpleCard: React.FC<CardProps> = ({ image, title, content }) => {
   return (
-    <Card className="bg-slate-100 dark:bg-slate-900">
-      <CardHeader className="flex flex-row gap-2 mb-0">
-        <DarkImage src={image} alt="" width={50} height={50} />{" "}
-        <CardTitle>{title}</CardTitle>
-      </CardHeader>
-      <CardContent className="text-muted-foreground text-sm">
-        {content}
+    <Card className="bg-slate-100 dark:bg-slate-900 m-3 w-30">
+      <CardHeader>{image}</CardHeader>
+      <CardContent>
+        <h1 className="font-bold">{title}</h1>
+        <p className="text-sm text-muted-foreground">{content}</p>
       </CardContent>
     </Card>
   );
 };
+
+function Logo() {
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <span className="w-[100px] h-[100px]"></span>;
+  }
+  let src;
+
+  switch (resolvedTheme) {
+    case "dark":
+      src = "/icon.png";
+      break;
+    case "light":
+      src = "/dark-icon.png";
+      break;
+    default:
+      src =
+        "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+      break;
+  }
+
+  return <Image src={src} alt="Logo" className="mt-1" width={100} height={100} />;
+}
 
 export default Page;
