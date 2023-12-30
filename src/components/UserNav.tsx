@@ -15,6 +15,7 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import { getInitials } from "@/lib/utils";
 import { Session } from "next-auth";
+import ToggleTheme from "./ToggleTheme";
 
 interface Props {
   user: Pick<Session["user"], "image" | "name" | "email">;
@@ -47,8 +48,7 @@ const UserNav: FC<Props> = ({ user }) => {
           <h2 className="opacity-60">{user.email}</h2>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={toggleTheme}>
-          Toggle theme &nbsp;
-          {theme === "dark" ? <SunIcon className="font-bold" /> : <MoonIcon />}
+          Toggle Theme <ToggleTheme variant="ghost" />
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem

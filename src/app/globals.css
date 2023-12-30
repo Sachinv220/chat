@@ -95,3 +95,20 @@
     @apply ml-[28%];
   }
 }
+
+[data-theme="dark"] [data-hide-on-theme="dark"],
+[data-theme="light"] [data-hide-on-theme="light"] {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .features {
+    @apply flex flex-col;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .features {
+    @apply grid grid-rows-2 grid-cols-2;
+  }
+}
