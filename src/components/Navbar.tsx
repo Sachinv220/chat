@@ -24,40 +24,40 @@ const Navbar: React.FC<Props> = ({ userId }) => {
   const { chats } = useChatData();
   const currentChat = chats.filter((chat) => chat.id === id).at(0);
   return (
-      <React.Fragment>
-    <div className="fixed top-0 flex flex-col p-3 w-full h-20 bg-slate-100 dark:bg-slate-900 z-10">
-      <div className="flex w-full gap-1">
-        <Album
-          images={getImages(currentChat || null, userId)}
-          className="mb-1"
-        />
-        <div className="flex flex-col">
-          <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
-            {getChatName(currentChat || null, userId)}
-          </h3>
-          <p className="text-muted-foreground text-sm">
-            {DisplayParticipants()}
-          </p>
-        </div>
-        <div className="fixed top-4 right-3">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <HamburgerMenuIcon width={20} height={25} />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="child-hover:cursor-pointer">
-              <DropdownMenuLabel>Settings</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Add User</DropdownMenuItem>
-              <DropdownMenuItem className="text-red-500">
-                Leave &nbsp; <ExitIcon />
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+    <React.Fragment>
+      <div className="fixed top-0 px-2 pt-1 flex flex-col w-full h-16 bg-slate-100 dark:bg-slate-900 z-10">
+        <div className="flex w-full gap-1 pb-3">
+          <Album
+            images={getImages(currentChat || null, userId)}
+            className="mb-1 w-12 h-12"
+          />
+          <div className="flex flex-col">
+            <h3 className="scroll-m-20 text-lg font-medium tracking-tight">
+              {getChatName(currentChat || null, userId)}
+            </h3>
+            <p className="text-muted-foreground text-sm">
+              {DisplayParticipants()}
+            </p>
+          </div>
+          <div className="fixed top-4 right-3">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <HamburgerMenuIcon width={20} height={25} />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="child-hover:cursor-pointer">
+                <DropdownMenuLabel>Settings</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Add User</DropdownMenuItem>
+                <DropdownMenuItem className="text-red-500">
+                  Leave &nbsp; <ExitIcon />
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
-    </div>
-        <div className="h-12"></div>
-      </React.Fragment>
+      <div className="h-12"></div>
+    </React.Fragment>
   );
 
   function DisplayParticipants(): React.ReactNode {

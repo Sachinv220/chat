@@ -24,7 +24,7 @@ export default function RootLayout({
         <title>Chat Coffee</title>
       </head>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
         </ThemeProvider>
       </body>

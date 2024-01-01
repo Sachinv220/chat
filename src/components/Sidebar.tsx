@@ -38,7 +38,7 @@ const Sidebar: React.FC<Props> = ({ user, children, allChats }) => {
       />
       <nav className={`fixed top-0 left-0 h-screen w-[28%] ${className}`}>
         <div className="flex flex-col w-full h-screen shadow-md border-r">
-          <div className="flex w-full items-center p-1">
+          <div className="flex w-full items-center p-1 bg-slate-900 h-16">
             <UserNav user={user} />
             <AddChat
               onSuccess={addChat}
@@ -46,7 +46,7 @@ const Sidebar: React.FC<Props> = ({ user, children, allChats }) => {
               userEmail={user.email || ""}
             />
           </div>
-          <div className="flex w-full gap-1 shadow-sm">
+          <div className="flex w-full rounded-none gap-1 shadow-sm">
             <SearchChat userId={user.id} chats={chats.map((chat) => chat)} />
           </div>
           <div className="pt-3">

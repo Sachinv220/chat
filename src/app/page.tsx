@@ -53,7 +53,7 @@ const Navbar = () => {
           </Button>
         </a>
       </div>
-      <ToggleTheme variant="secondary" className="ml-auto mr-1" />
+      <ToggleTheme variant="secondary" className="ml-auto mr-3" />
     </div>
   );
 };
