@@ -25,7 +25,7 @@ const Navbar: React.FC<Props> = ({ userId }) => {
   const currentChat = chats.filter((chat) => chat.id === id).at(0);
   return (
     <React.Fragment>
-      <div className="fixed top-0 px-2 pt-1 flex flex-col w-full h-16 bg-slate-100 dark:bg-slate-900 z-10">
+      <div className="fixed top-0 px-2 pt-1 flex flex-col w-full h-16 bg-slate-200 dark:bg-slate-900 z-10">
         <div className="flex w-full gap-1 pb-3">
           <Album
             images={getImages(currentChat || null, userId)}

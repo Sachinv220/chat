@@ -1,17 +1,14 @@
 /** @format */
 
-import Logo from "@/components/Logo";
 import SignInButton from "@/components/SignInButton";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { getAuthSession } from "@/lib/nextauth";
-import Image from "next/image";
 import { redirect } from "next/navigation";
 
 const SignIn = async () => {

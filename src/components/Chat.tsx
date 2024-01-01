@@ -22,7 +22,7 @@ const Chat: React.FC<Props> = ({ chat, userId }) => {
     <Link href={`/chat/${chat.id}`} className={`flex w-full ${bg} px-1`}>
       <Album images={getImages(chat, userId)} className="h-12 w-12" />
       <div className="flex flex-col w-full ml-1">
-        <h3 className="scroll-m-20 text-lg font-semibold tracking-tight line-clamp-1">
+        <h3 className="scroll-m-20 text-lg font-medium tracking-tight line-clamp-1">
           {getChatName(chat, userId) || "Untitled Group"}
         </h3>
         <p className="text-sm leading-7 h-7 text-muted-foreground line-clamp-1">

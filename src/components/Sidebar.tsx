@@ -38,7 +38,7 @@ const Sidebar: React.FC<Props> = ({ user, children, allChats }) => {
       />
       <nav className={`fixed top-0 left-0 h-screen w-[28%] ${className}`}>
         <div className="flex flex-col w-full h-screen shadow-md border-r">
-          <div className="flex w-full items-center p-1 bg-slate-900 h-16">
+          <div className="flex w-full items-center p-1 bg-slate-200 dark:bg-slate-900 h-16">
             <UserNav user={user} />
             <AddChat
               onSuccess={addChat}

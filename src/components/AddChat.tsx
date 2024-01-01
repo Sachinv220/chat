@@ -39,7 +39,7 @@ const AddChat: React.FC<Props> = ({ userEmail, onFailure, onSuccess }) => {
     <Dialog open={open} onOpenChange={(e) => setOpen(e)}>
       <DialogTrigger
         onClick={() => setOpen(true)}
-        className="rounded-full bg-slate-200 dark:bg-slate-800 p-2 ml-auto"
+        className="rounded-full bg-slate-50 dark:bg-slate-800 p-2 ml-auto"
       >
         <PlusIcon />
       </DialogTrigger>
