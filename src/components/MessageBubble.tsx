@@ -2,10 +2,10 @@
 "use client";
 import { Message } from "@/actions/types";
 import { getInitials } from "@/lib/utils";
-import React, { memo } from "react";
+import React from "react";
 import { Avatar } from "./ui/avatar";
 import Image from "next/image";
-import { TrashIcon } from "@radix-ui/react-icons";
+import { Trash2Icon as TrashIcon } from "lucide-react";
 
 interface Props {
   message: Message;
@@ -23,14 +23,15 @@ const MessageBubble: React.FC<Props> = ({
   icon,
 }) => {
   let bg = !align
-    ? "bg-slate-200 dark:bg-indigo-500"
-    : "text-white bg-blue-500";
+    ? "bg-slate-200 text-black dark:bg-slate-800 dark:text-white"
+    : "text-white bg-blue-600";
   if (loading) bg = "dark:bg-slate-800 bg-slate-200";
   const padding = align ? "ml-auto" : "";
+  const showImage = !align && icon;
   return (
     <div className={`flex w-fit gap-1 px-2 ${padding}`}>
-      <Avatar className="mt-1 w-8 h-8 rounded-full">
-        {icon && (
+      <Avatar className="w-8 h-8 rounded-full">
+        {showImage && (
           <Image
             alt={getInitials(message.user.name)}
             width={100}
@@ -39,19 +40,26 @@ const MessageBubble: React.FC<Props> = ({
           />
         )}
       </Avatar>
-      <div className={`flex flex-col w-fit rounded-md p-1 h-fit ${bg}`}>
-        <div className="flex text-xs">
-          {message.user.name}
+      <div className="flex flex-col">
+        {showImage && (
+          <p className="text-sm text-muted-foreground">{message.user.name}</p>
+        )}
+        <div className="flex">
           {align && (
-            <button className="mr-auto" onClick={() => onDelete(message.id)}>
-              <TrashIcon className="h-5 w-5 text-red-700" />
+            <button
+              className="opacity-0 hover:opacity-100"
+              onClick={() => onDelete(message.id)}
+            >
+              <TrashIcon height={10 * 2} color="red" />
             </button>
           )}
+          <div className={`flex flex-col w-fit rounded-md p-2 h-fit ${bg}`}>
+            <h3 className="text-sm">{message.message}</h3>
+          </div>
         </div>
-        <h3 className="text-md">{message.message}</h3>
       </div>
     </div>
   );
 };
 
-export default memo(MessageBubble);
+export default MessageBubble;

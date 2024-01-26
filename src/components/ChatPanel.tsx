@@ -78,7 +78,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
 
   return (
     <React.Fragment>
-      <div className="flex flex-col pt-10 h-screen px-3 gap-5 mb-10">
+      <div className="flex flex-col pt-10 h-screen px-3 gap-0.5 mb-10">
         {messages.map((message, index) => (
           <MessageBubble
             onDelete={handleDeleteMessage}
@@ -105,7 +105,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSubmit();
             }}
-            className="w-[67%]"
+            className="w-[67%] b-blue-700"
             placeholder="Send a Message"
           />
           <Button onClick={handleSubmit}>
