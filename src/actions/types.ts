@@ -15,6 +15,7 @@ export type Message = {
 export type Chat = {
   id: string;
   name: string;
+  type: string;
   messages: {
     user: {
       name: string | null;

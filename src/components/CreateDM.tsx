@@ -8,7 +8,7 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/components/ui/dialog";
-import { PlusIcon } from "@radix-ui/react-icons";
+import { PlusIcon } from "lucide-react";
 import React, { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -21,12 +21,12 @@ interface Props {
   onSuccess: (chat: Chat) => any;
 }
 
-const AddChat: React.FC<Props> = ({ userEmail, onFailure, onSuccess }) => {
+const CreateDM: React.FC<Props> = ({ userEmail, onFailure, onSuccess }) => {
   const [email, setEmail] = useState("");
   const [open, setOpen] = useState(false);
 
   async function helper() {
-    const res = await createChat([email, userEmail], "");
+    const res = await createChat([email, userEmail], "dm");
     setOpen(false);
     if (res === Response.SERVER_ERROR) {
       onFailure("The user your trying to find does not exist");
@@ -39,13 +39,13 @@ const AddChat: React.FC<Props> = ({ userEmail, onFailure, onSuccess }) => {
     <Dialog open={open} onOpenChange={(e) => setOpen(e)}>
       <DialogTrigger
         onClick={() => setOpen(true)}
-        className="rounded-full bg-slate-50 dark:bg-slate-800 p-2 ml-auto"
+        className="rounded-full bg-slate-50 dark:bg-slate-800 p-2 m-1"
       >
-        <PlusIcon />
+        <PlusIcon strokeWidth={1} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create a Chat</DialogTitle>
+          <DialogTitle>Create a DM</DialogTitle>
           <DialogDescription className="mt-2">
             <section className="flex flex-col gap-1">
               <h3 className="pl-1 font-medium text-black dark:text-white">
@@ -64,7 +64,7 @@ const AddChat: React.FC<Props> = ({ userEmail, onFailure, onSuccess }) => {
                 variant="secondary"
                 className="mt-1 bg-blue-500"
               >
-                Enter
+                Create
               </Button>
             </section>
           </DialogDescription>
@@ -74,4 +74,5 @@ const AddChat: React.FC<Props> = ({ userEmail, onFailure, onSuccess }) => {
   );
 };
 
-export default AddChat;
+
+export default CreateDM;

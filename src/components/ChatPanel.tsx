@@ -105,10 +105,10 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSubmit();
             }}
-            className="w-[67%] b-blue-700"
+            className="w-[67%] outline-blue-100"
             placeholder="Send a Message"
           />
-          <Button onClick={handleSubmit}>
+          <Button className="bg-slate-100 hover:bg-slate-50" onClick={handleSubmit}>
             <PaperPlaneIcon />
           </Button>
         </div>

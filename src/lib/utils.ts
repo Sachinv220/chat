@@ -32,7 +32,8 @@ export function generateMessage(message: string, user: Session["user"]) {
 }
 
 export function getChatName(chat: Chat | null, userId: string) {
-  if (!chat) return ""
+  if (!chat) return "";
+  if (chat.participants.length === 1) return "You";
   if (chat.participants.length > 2) {
     return chat.name;
   }
@@ -41,8 +42,15 @@ export function getChatName(chat: Chat | null, userId: string) {
 
 export function getImages(chat: Chat | null, userId: string): string[] {
   if (!chat) return [""];
-  if (chat.participants.length > 2)
-    return chat.participants.map((par) => par.image || "");
+  else if (chat.participants.length === 1)
+    return [chat.participants[0].image || ""];
+  
+  else if (chat.participants.length === 2)
+    return [chat.participants.find((par) => par.id !== userId)?.image || ""];
 
-  return [chat.participants.find((user) => user.id !== userId)?.image || ""];
+  let images: string[] = [];
+  for (let i = 0; i < chat.participants.length; i++) {
+    images.push(chat.participants[i].image || "");
+  }
+  return images;
 }

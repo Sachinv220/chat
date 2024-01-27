@@ -6,11 +6,12 @@ import SearchChat from "./SearchChat";
 import UserNav from "./UserNav";
 import { Chat as TChat } from "@/actions/types";
 import { Session } from "next-auth";
-import AddChat from "./AddChat";
+import CreateChat from "./CreateChat";
 import { usePathname } from "next/navigation";
 import { Toaster, toast } from "sonner";
 import { useTheme } from "next-themes";
 import { DataProvider } from "./data-provider";
+import CreateDM from "./CreateDM";
 
 interface Props {
   user: Session["user"];
@@ -40,7 +41,12 @@ const Sidebar: React.FC<Props> = ({ user, children, allChats }) => {
         <div className="flex flex-col w-full h-screen shadow-md border-r">
           <div className="flex w-full items-center p-1 bg-slate-200 dark:bg-slate-900 h-16">
             <UserNav user={user} />
-            <AddChat
+            <CreateChat
+              onSuccess={addChat}
+              onFailure={toast}
+              userEmail={user.email || ""}
+            />
+            <CreateDM
               onSuccess={addChat}
               onFailure={toast}
               userEmail={user.email || ""}

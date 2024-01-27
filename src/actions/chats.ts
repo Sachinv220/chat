@@ -24,16 +24,21 @@ export async function getChats(user: Session["user"]) {
   }
 }
 
-export async function createChat(participants: string[], name: string) {
+export async function createChat(
+  participants: string[],
+  type: "chat" | "dm",
+  name?: string
+) {
   try {
     const chat: Chat = await prisma.chat.create({
       data: {
-        name: name,
+        name: name || "",
         participants: {
           connect: participants.map((email) => ({
             email: email,
           })),
         },
+        type,
       },
       ...chatQuery,
     });

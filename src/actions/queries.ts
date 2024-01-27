@@ -4,6 +4,7 @@ export const chatQuery = {
   select: {
     id: true,
     name: true,
+    type: true,
     participants: {
       select: {
         name: true,
