@@ -31,6 +31,8 @@ const CreateChat: React.FC<Props> = ({ userEmail, onFailure, onSuccess }) => {
     setOpen(false);
     if (res === Response.SERVER_ERROR) {
       onFailure("The user your trying to find does not exist");
+    } else if (res === Response.CONFILCT) {
+      onFailure("The DM already exists");
     } else {
       onSuccess(res);
     }

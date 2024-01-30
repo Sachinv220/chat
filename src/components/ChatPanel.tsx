@@ -37,8 +37,11 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
   async function handleSubmit() {
     inputRef.current?.focus();
     if (inputRef.current) inputRef.current.value = "";
-    setTempMessage(text);
-    const message = await createMessage(text, chatId, user?.id || "");
+    const tempText = text.trim();
+    if (!tempText) return;
+
+    setTempMessage(tempText);
+    const message = await createMessage(tempText, chatId, user?.id || "");
     if (message !== Response.SERVER_ERROR) {
       setMessages([...messages, message]);
       setTempMessage("");
@@ -108,7 +111,10 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
             className="w-[67%] outline-blue-100"
             placeholder="Send a Message"
           />
-          <Button className="bg-slate-100 hover:bg-slate-50" onClick={handleSubmit}>
+          <Button
+            className="bg-slate-100 hover:bg-slate-50"
+            onClick={handleSubmit}
+          >
             <PaperPlaneIcon />
           </Button>
         </div>

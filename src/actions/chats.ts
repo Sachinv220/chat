@@ -30,6 +30,24 @@ export async function createChat(
   name?: string
 ) {
   try {
+    let res = 0;
+    if (type === "dm") {
+      res = await prisma.chat.count({
+        where: {
+          type,
+          participants: {
+            every: {
+              email: {
+                in: participants,
+              },
+            },
+          },
+        },
+      });
+    }
+    console.log(res);
+    if (res > 1) return Response.CONFILCT;
+
     const chat: Chat = await prisma.chat.create({
       data: {
         name: name || "",

@@ -3,6 +3,7 @@ import { Session } from "next-auth";
 
 export enum Response {
   SERVER_ERROR = 500,
+  CONFILCT = 409,
 }
 
 export type Message = {
