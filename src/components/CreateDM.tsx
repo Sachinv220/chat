@@ -25,7 +25,8 @@ const CreateDM: React.FC<Props> = ({ userEmail, onFailure, onSuccess }) => {
   const [email, setEmail] = useState("");
   const [open, setOpen] = useState(false);
 
-  async function helper() {
+  async function helper(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     const res = await createChat([email, userEmail], "dm");
     setOpen(false);
     if (res === Response.SERVER_ERROR) {
@@ -47,7 +48,7 @@ const CreateDM: React.FC<Props> = ({ userEmail, onFailure, onSuccess }) => {
         <DialogHeader>
           <DialogTitle>Create a DM</DialogTitle>
           <DialogDescription className="mt-2">
-            <section className="flex flex-col gap-1">
+            <form className="flex flex-col gap-1" onSubmit={(e) => helper(e)}>
               <h3 className="pl-1 font-medium text-black dark:text-white">
                 Email
               </h3>
@@ -55,18 +56,15 @@ const CreateDM: React.FC<Props> = ({ userEmail, onFailure, onSuccess }) => {
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 placeholder="Email"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") helper();
-                }}
+                required
               />
               <Button
-                onClick={helper}
                 variant="secondary"
                 className="mt-1 bg-blue-500"
               >
                 Create
               </Button>
-            </section>
+            </form>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
