@@ -59,6 +59,14 @@ const Navbar = () => {
 };
 
 const Page = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <div className="max-h-screen">
       <Navbar />
@@ -119,16 +127,7 @@ const SimpleCard: React.FC<CardProps> = ({ image, title, content }) => {
 };
 
 function Logo() {
-  const [mounted, setMounted] = useState(false);
   const { resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return <span className="w-[100px] h-[100px]"></span>;
-  }
   let src;
 
   switch (resolvedTheme) {
@@ -144,7 +143,9 @@ function Logo() {
       break;
   }
 
-  return <Image src={src} alt="Logo" className="mt-1" width={100} height={100} />;
+  return (
+    <Image src={src} alt="Logo" className="mt-1" width={100} height={100} />
+  );
 }
 
 export default Page;

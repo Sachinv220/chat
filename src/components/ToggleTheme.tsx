@@ -20,9 +20,8 @@ interface Props {
   variant: VariantProps<typeof buttonVariants>["variant"];
   props?: React.HTMLAttributes<HTMLDivElement>;
 }
-
 function ToggleTheme({ className, variant, ...props }: Props) {
-  const { setTheme, resolvedTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
 
   return (
     <div className={className} {...props}>
