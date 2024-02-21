@@ -144,7 +144,14 @@ function Logo() {
   }
 
   return (
-    <Image src={src} alt="Logo" className="mt-1" width={100} height={100} />
+    <Image
+      src={src}
+      alt="Logo"
+      className="mt-1"
+      width={100}
+      height={100}
+      priority={true}
+    />
   );
 }
 
