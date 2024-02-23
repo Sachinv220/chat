@@ -2,10 +2,8 @@
 "use server";
 import { prisma } from "@/lib/db";
 import { Message, Response } from "./types";
-import { getAuthSession } from "@/lib/nextauth";
 import { pusherServer } from "@/lib/pusher";
 import { messageQuery } from "./queries";
-import { redirect } from "next/navigation";
 
 export async function createMessage(
   message: string,
@@ -13,72 +11,78 @@ export async function createMessage(
   userId: string
 ) {
   try {
-    await prisma.chat.findFirstOrThrow({
-      where: {
-        id: chatId,
-        participants: {
-          some: {
-            id: userId,
-          },
-        },
-      },
-    });
-
-    const createdMessage: Message = await prisma.message.create({
-      data: {
-        message: message,
-        chat: {
-          connect: { id: chatId },
-        },
-        user: {
-          connect: { id: userId },
-        },
-      },
-      ...messageQuery,
-    });
-    await pusherServer.trigger(chatId, "add_message", createdMessage);
-    return createdMessage;
-  } catch (e) {
-    return Response.SERVER_ERROR;
-  }
-}
-
-export async function getMessages(chatId: string) {
-  const session = await getAuthSession();
-  if (!session) return redirect("/login");
-  const { user } = session;
-  try {
-    const messages: Message[] = await prisma.message.findMany({
-      ...messageQuery,
-      where: {
-        chat: {
+    const [_, createdMessage] = await prisma.$transaction([
+      prisma.chat.findFirstOrThrow({
+        where: {
           id: chatId,
-        },
-        AND: {
-          chat: {
-            participants: {
-              some: {
-                id: session.user.id,
-              },
+          participants: {
+            some: {
+              id: userId,
             },
           },
         },
-      },
-    });
-    return { messages, user };
+      }),
+      prisma.message.create({
+        data: {
+          message: message,
+          chat: {
+            connect: { id: chatId },
+          },
+          user: {
+            connect: { id: userId },
+          },
+        },
+        ...messageQuery,
+      }),
+    ]);
+    await pusherServer.trigger(chatId, "add_message", createdMessage);
+    return createdMessage;
   } catch (e) {
+    console.log(e);
     return Response.SERVER_ERROR;
   }
 }
 
-export async function deleteMessage(messageId: string) {
+export async function getMessages(chatId: string, userId: string, time?: Date) {
+  try {
+    const messages: Message[] = await prisma.message.findMany({
+      ...messageQuery,
+      orderBy: {
+        dateTime: "desc",
+      },
+      where: {
+        chat: {
+          id: chatId,
+          participants: {
+            some: {
+              id: userId,
+            },
+          },
+        },
+        dateTime: {
+          lt: time,
+        },
+      },
+      take: 10,
+    });
+
+    return messages.reverse();
+  } catch (e) {
+    console.log(e);
+    return Response.SERVER_ERROR;
+  }
+}
+
+export async function deleteMessage(messageId: string, userId: string) {
   try {
     await prisma.message.delete({
       where: {
         id: messageId,
+        userId,
       },
     });
   } catch (e) {
+    console.log(e);
     return Response.SERVER_ERROR;
   }
 }
