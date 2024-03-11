@@ -4,12 +4,11 @@
 
 import * as React from "react";
 
-export default function useInfiniteScroll() {
+export default function usePaginate() {
   const [scroll, setScroll] = React.useState(false);
 
   React.useEffect(() => {
     function handleScroll() {
-      console.log("scrolling")
       setScroll(window.scrollY === 0);
     }
 

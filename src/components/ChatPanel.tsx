@@ -17,7 +17,7 @@ import { Session } from "next-auth";
 import { pusherClient } from "@/lib/pusher";
 import { deleteMessage as remove } from "@/actions/messages";
 import { generateMessage } from "@/lib/utils";
-import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import usePaginate from "@/hooks/usePaginate";
 import { getMessages } from "@/actions/messages";
 
 interface LoadingMessage extends Message {
@@ -34,7 +34,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
   const [messages, setMessages] = useState(chatMessages);
   const [tempMessage, setTempMessage] = useState("");
   const inputRef = useRef<ElementRef<"input">>(null);
-  const getNewMesssages = useInfiniteScroll();
+  const getNewMesssages = usePaginate();
   const canFetch = useRef(true);
 
   useEffect(() => {
@@ -126,6 +126,7 @@ const ChatPanel: React.FC<Props> = ({ chatId, chatMessages, user }) => {
         {tempMessage && (
           <MessageBubble {...generateMessage(tempMessage, user)} />
         )}
+        <div className="min-h-[50px] w-10" />
       </div>
       <div className="fixed bottom-0 w-full h-10 backdrop-blur-md mt-10">
         <form className="flex px-3 gap-1" onSubmit={handleSubmit}>

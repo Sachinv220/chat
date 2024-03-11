@@ -63,7 +63,7 @@ export async function getMessages(chatId: string, userId: string, time?: Date) {
           lt: time,
         },
       },
-      take: 10,
+      take: 20,
     });
 
     return messages.reverse();
